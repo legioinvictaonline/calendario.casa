@@ -305,10 +305,39 @@ function fmt(h, m) {
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
 }
 
+// Per-day overrides: { date: [array of blocks] }
+const DAY_OVERRIDES = {
+  12: function(wake, grogEnd) {
+    // Hoy: trabajo cortado a 14:45, comida 2h, luego trabajo 8h
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: minsToday(14,45), cls: 'b-work', label: 'Trabajo', time: true },
+      { start: minsToday(14,45), end: minsToday(16,45), cls: 'b-break', label: 'Comida', time: true },
+      { start: minsToday(16,45), end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
+    ];
+  },
+  13: function(wake, grogEnd) {
+    // Mañana: 2h diseño mañana, comida, 2h diseño tarde
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: grogEnd + 120, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: grogEnd + 120, end: grogEnd + 240, cls: 'b-break', label: 'Comida', time: true },
+      { start: grogEnd + 240, end: grogEnd + 360, cls: 'b-design', label: 'Diseño 🏠', time: true },
+    ];
+  },
+};
+
 function getBlocks(day) {
   const [date, dow, wh, wm, isWE] = day;
   const wake = minsToday(wh, wm);
   const grogEnd = wake + 90;
+  
+  // Check for overrides
+  if (DAY_OVERRIDES[date]) {
+    return DAY_OVERRIDES[date](wake, grogEnd);
+  }
   
   if (isWE) {
     const workEnd = grogEnd + 240;
