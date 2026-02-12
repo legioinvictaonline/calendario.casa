@@ -318,13 +318,16 @@ const DAY_OVERRIDES = {
     ];
   },
   13: function(wake, grogEnd) {
-    // Mañana: 2h diseño mañana, comida, 2h diseño tarde
+    // Mañana: 6h diseño mañana, comida 2h, 6h diseño tarde
+    const designEnd1 = grogEnd + 360;
+    const breakEnd = designEnd1 + 120;
+    const designEnd2 = breakEnd + 360;
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: grogEnd + 120, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: grogEnd + 120, end: grogEnd + 240, cls: 'b-break', label: 'Comida', time: true },
-      { start: grogEnd + 240, end: grogEnd + 360, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: grogEnd, end: designEnd1, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: designEnd1, end: breakEnd, cls: 'b-break', label: 'Comida', time: true },
+      { start: breakEnd, end: Math.min(designEnd2, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   },
 };
