@@ -421,21 +421,42 @@ function render() {
     html += `</div></div>`;
   }
   
-  // Render: today first
-  for (const day of todayData) renderDay(day, false);
-  
-  // Future days in order
-  if (futureDays.length) {
-    html += '<div class="week-label">Próximos días</div>';
-    for (const day of futureDays) renderDay(day, false);
+  // Helper: get week label for a date (weeks Sun-Sat)
+  function getWeekLabel(date) {
+    return date <= 14 ? 'Esta semana' : (date <= 21 ? 'Próxima semana' : 'Semana del 22');
   }
   
-  // Past days, most recent first, collapsed
+  function renderWithWeeks(days, isPast) {
+    let lastWeek = '';
+    for (const day of days) {
+      const wl = getWeekLabel(day[0]);
+      if (wl !== lastWeek) {
+        if (lastWeek) html += '<div style="height:8px"></div>';
+        html += `<div class="week-label">${wl}</div>`;
+        lastWeek = wl;
+      }
+      renderDay(day, isPast);
+    }
+  }
+  
+  // Render: today first
+  for (const day of todayData) {
+    html += `<div class="week-label">Hoy</div>`;
+    renderDay(day, false);
+  }
+  
+  // Future days with week labels
+  if (futureDays.length) {
+    html += '<div style="height:8px"></div>';
+    renderWithWeeks(futureDays, false);
+  }
+  
+  // Past days, most recent first, collapsed, with week labels
   if (pastDays.length) {
     html += '<div style="height:16px"></div>';
     html += '<details class="past-section"><summary class="week-label" style="cursor:pointer;user-select:none;">Días anteriores ▸</summary>';
     html += '<div style="margin-top:8px">';
-    for (const day of pastDays) renderDay(day, true);
+    renderWithWeeks(pastDays, true);
     html += '</div></details>';
   }
   
