@@ -1,6 +1,6 @@
 {
-  "name": "Horarios",
-  "short_name": "Horarios",
+  "name": "Calendario CaSa",
+  "short_name": "Calendario CaSa",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#faf9f7",
