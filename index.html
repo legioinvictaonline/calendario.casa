@@ -228,6 +228,13 @@
     header h1 { font-size: 1.3em; }
   }
 
+  .day-row.past {
+    opacity: 0.45;
+  }
+  
+  .past-section summary::-webkit-details-marker { display: none; }
+  .past-section[open] summary .arrow { transform: rotate(90deg); }
+  
   .status-banner {
     text-align: center;
     padding: 14px 20px;
@@ -365,24 +372,17 @@ function render() {
   }
   hm.innerHTML = hmHtml;
   
-  let html = '';
-  let lastWeekLabel = '';
+  // Split days: today, future, past
+  const todayData = DAYS_DATA.filter(d => todayMonth === 2 && d[0] === todayDate);
+  const futureDays = DAYS_DATA.filter(d => todayMonth !== 2 || d[0] > todayDate);
+  const pastDays = DAYS_DATA.filter(d => todayMonth === 2 && d[0] < todayDate).reverse(); // most recent first
   
-  for (const day of DAYS_DATA) {
+  let html = '';
+  
+  function renderDay(day, isPast) {
     const [date, dow, wh, wm, isWE] = day;
-    
-    // Week separator
-    // Weeks: Sun-Sat. Feb 12(Thu)-14(Sat), Feb 15(Sun)-21(Sat), Feb 22(Sun)-28(Sat)
-    let weekLabel = date <= 14 ? 'Esta semana' : (date <= 21 ? 'Próxima semana' : 'Semana del 22');
-    if (weekLabel !== lastWeekLabel) {
-      // Don't add separator before first week
-      if (lastWeekLabel) html += '<div style="height:8px"></div>';
-      html += `<div class="week-label">${weekLabel}</div>`;
-      lastWeekLabel = weekLabel;
-    }
-    
     const isToday = todayMonth === 2 && todayDate === date;
-    html += `<div class="day-row ${isToday ? 'today' : ''}">`;
+    html += `<div class="day-row ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}">`;
     html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
     html += `<div class="timeline">`;
     
@@ -419,6 +419,24 @@ function render() {
     }
     
     html += `</div></div>`;
+  }
+  
+  // Render: today first
+  for (const day of todayData) renderDay(day, false);
+  
+  // Future days in order
+  if (futureDays.length) {
+    html += '<div class="week-label">Próximos días</div>';
+    for (const day of futureDays) renderDay(day, false);
+  }
+  
+  // Past days, most recent first, collapsed
+  if (pastDays.length) {
+    html += '<div style="height:16px"></div>';
+    html += '<details class="past-section"><summary class="week-label" style="cursor:pointer;user-select:none;">Días anteriores ▸</summary>';
+    html += '<div style="margin-top:8px">';
+    for (const day of pastDays) renderDay(day, true);
+    html += '</div></details>';
   }
   
   cal.innerHTML = html;
