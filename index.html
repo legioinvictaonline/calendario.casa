@@ -341,6 +341,20 @@ function getBlocks(day) {
       { start: famEnd, end: designEnd2, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
+  } else if (date === 15) {
+    // Domingo 15 feb — trabajo → diseño
+    const desEnd1 = grogEnd + 240;
+    const famEnd = desEnd1 + 240;
+    const desEnd2 = famEnd + 240;
+    const recEnd = desEnd2 + 240;
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: desEnd1, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: desEnd1, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
+      { start: famEnd, end: desEnd2, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: desEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
+    ];
   } else if (isWE) {
     // Fin de semana default
     const workEnd = grogEnd + 240;
