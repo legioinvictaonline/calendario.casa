@@ -276,22 +276,22 @@
 const DAYS_DATA = [
   // [date, dow, wake_h, wake_m, isWeekend]
   [12, 'JUE', 9, 13, false],
-  [13, 'VIE', 7, 26, false],
-  [14, 'SÁB', 7, 22, true],
-  [15, 'DOM', 7, 20, true],
-  [16, 'LUN', 6, 58, false],
-  [17, 'MAR', 6, 54, false],
-  [18, 'MIÉ', 6, 44, false],
-  [19, 'JUE', 6, 34, false],
-  [20, 'VIE', 6, 32, false],
-  [21, 'SÁB', 6, 30, true],
-  [22, 'DOM', 6, 30, true],
-  [23, 'LUN', 6, 28, false],
-  [24, 'MAR', 6, 26, false],
-  [25, 'MIÉ', 6, 18, false],
-  [26, 'JUE', 6, 16, false],
-  [27, 'VIE', 6, 14, false],
-  [28, 'SÁB', 6, 30, true],
+  [13, 'VIE', 8, 42, false],
+  [14, 'SÁB', 7, 54, true],
+  [15, 'DOM', 7, 36, true],
+  [16, 'LUN', 7, 14, false],
+  [17, 'MAR', 7, 10, false],
+  [18, 'MIÉ', 7, 0, false],
+  [19, 'JUE', 6, 50, false],
+  [20, 'VIE', 6, 48, false],
+  [21, 'SÁB', 6, 46, true],
+  [22, 'DOM', 6, 46, true],
+  [23, 'LUN', 6, 44, false],
+  [24, 'MAR', 6, 42, false],
+  [25, 'MIÉ', 6, 34, false],
+  [26, 'JUE', 6, 32, false],
+  [27, 'VIE', 6, 30, false],
+  [28, 'SÁB', 6, 46, true],
 ];
 
 // Display range: 6:00 to 23:00 (17 hours)
@@ -305,44 +305,44 @@ function fmt(h, m) {
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
 }
 
-// Per-day overrides: { date: [array of blocks] }
-const DAY_OVERRIDES = {
-  12: function(wake, grogEnd) {
-    // Hoy: trabajo cortado a 14:45, comida 2h, luego trabajo 8h
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: minsToday(14,45), cls: 'b-work', label: 'Trabajo', time: true },
-      { start: minsToday(14,45), end: minsToday(16,45), cls: 'b-break', label: 'Comida', time: true },
-      { start: minsToday(16,45), end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  },
-  13: function(wake, grogEnd) {
-    // Mañana: 6h diseño mañana, comida 2h, 6h diseño tarde
-    const designEnd1 = grogEnd + 360;
-    const breakEnd = designEnd1 + 120;
-    const designEnd2 = breakEnd + 360;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: designEnd1, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: designEnd1, end: breakEnd, cls: 'b-break', label: 'Comida', time: true },
-      { start: breakEnd, end: Math.min(designEnd2, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  },
-};
-
 function getBlocks(day) {
   const [date, dow, wh, wm, isWE] = day;
   const wake = minsToday(wh, wm);
   const grogEnd = wake + 90;
   
-  // Check for overrides
-  if (DAY_OVERRIDES[date]) {
-    return DAY_OVERRIDES[date](wake, grogEnd);
-  }
-  
-  if (isWE) {
+  // Day-specific overrides
+  if (date === 13) {
+    // Viernes 13 feb — custom
+    const workEnd = 12 * 60 + 30; // 12:30
+    const designEnd = 14 * 60 + 30; // 14:30
+    const famEnd = 16 * 60; // 16:00
+    const work2End = 19 * 60; // 19:00
+    const recEnd = 22 * 60; // 22:00
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: workEnd, end: designEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: designEnd, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
+      { start: famEnd, end: work2End, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: work2End, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
+    ];
+  } else if (date === 14) {
+    // Sábado 14 feb — custom
+    const designEnd1 = 13 * 60; // 13:00
+    const famEnd = 15 * 60; // 15:00
+    const designEnd2 = 17 * 60; // 17:00
+    const recEnd = 22 * 60; // 22:00
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: designEnd1, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: designEnd1, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
+      { start: famEnd, end: designEnd2, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
+    ];
+  } else if (isWE) {
+    // Fin de semana default
     const workEnd = grogEnd + 240;
     const famEnd = workEnd + 240;
     const desEnd = famEnd + 240;
@@ -356,6 +356,7 @@ function getBlocks(day) {
       { start: desEnd, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
   } else {
+    // Entre semana default
     const workEnd = grogEnd + 360;
     const breakEnd = workEnd + 120;
     const designEnd = breakEnd + 360;
