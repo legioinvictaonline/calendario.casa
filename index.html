@@ -311,7 +311,19 @@ function getBlocks(day) {
   const grogEnd = wake + 90;
   
   // Day-specific overrides
-  if (date === 13) {
+  if (date === 12) {
+    // Jueves 12 feb — trabajo mañana y tarde
+    const workEnd = grogEnd + 360;
+    const breakEnd = workEnd + 120;
+    const work2End = breakEnd + 360;
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
+      { start: breakEnd, end: Math.min(work2End, RANGE_END), cls: 'b-work', label: 'Trabajo', time: true },
+    ];
+  } else if (date === 13) {
     // Viernes 13 feb — custom
     const workEnd = 12 * 60 + 30; // 12:30
     const designEnd = 14 * 60 + 30; // 14:30
