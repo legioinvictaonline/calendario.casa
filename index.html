@@ -278,7 +278,7 @@ const DAYS_DATA = [
   [12, 'JUE', 9, 13, false],
   [13, 'VIE', 8, 42, false],
   [14, 'SÁB', 7, 54, true],
-  [15, 'DOM', 7, 36, true],
+  [15, 'DOM', 7, 59, true],
   [16, 'LUN', 7, 14, false],
   [17, 'MAR', 7, 10, false],
   [18, 'MIÉ', 7, 0, false],
@@ -354,18 +354,19 @@ function getBlocks(day) {
       { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
   } else if (date === 15) {
-    // Domingo 15 feb — trabajo → diseño
-    const desEnd1 = grogEnd + 240;
-    const famEnd = desEnd1 + 240;
-    const desEnd2 = famEnd + 240;
-    const recEnd = desEnd2 + 240;
+    // Domingo 15 feb — diseño mañana + familia + diseño tarde (sin recreativo)
+    const des1Start = 10 * 60 + 30; // 10:30
+    const des1End = 12 * 60 + 30;   // 12:30
+    const famStart = 13 * 60;        // 13:00
+    const famEnd = 17 * 60;          // 17:00
+    const des2Start = 17 * 60 + 29;  // 17:29
+    const des2End = 21 * 60 + 29;    // 21:29
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: desEnd1, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: desEnd1, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
-      { start: famEnd, end: desEnd2, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: desEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
+      { start: des1Start, end: des1End, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: famStart, end: famEnd, cls: 'b-family', label: 'Comida / familia', time: true },
+      { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (isWE) {
     // Fin de semana default
