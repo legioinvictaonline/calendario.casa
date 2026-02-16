@@ -279,7 +279,7 @@ const DAYS_DATA = [
   [13, 'VIE', 8, 42, false],
   [14, 'SÁB', 7, 54, true],
   [15, 'DOM', 7, 59, true],
-  [16, 'LUN', 7, 14, false],
+  [16, 'LUN', 9, 2, false],
   [17, 'MAR', 7, 10, false],
   [18, 'MIÉ', 7, 0, false],
   [19, 'JUE', 6, 50, false],
@@ -370,6 +370,19 @@ function getBlocks(day) {
       { start: des1Start, end: des1End, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: comidaStart, end: comidaEnd, cls: 'b-family', label: 'Comida / familia', time: true },
       { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
+    ];
+  } else if (date === 16) {
+    // Lunes 16 feb — despertar tardío 09:02
+    const workStart = 10 * 60 + 32;   // 10:32
+    const workEnd = 16 * 60 + 32;     // 16:32
+    const breakEnd = 19 * 60 + 3;     // 19:03
+    const designEnd = 23 * 60;        // 23:00
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: workStart, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / descanso', time: true },
+      { start: breakEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (isWE) {
     // Fin de semana default
