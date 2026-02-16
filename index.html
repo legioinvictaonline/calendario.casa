@@ -280,7 +280,7 @@ const DAYS_DATA = [
   [14, 'SÁB', 7, 54, true],
   [15, 'DOM', 7, 59, true],
   [16, 'LUN', 9, 2, false],
-  [17, 'MAR', 7, 10, false],
+  [17, 'MAR', 7, 34, false],
   [18, 'MIÉ', 7, 0, false],
   [19, 'JUE', 6, 50, false],
   [20, 'VIE', 6, 48, false],
@@ -502,7 +502,9 @@ function render() {
   
   // Helper: get week label for a date (weeks Sun-Sat)
   function getWeekLabel(date) {
-    return date <= 14 ? 'Esta semana' : (date <= 21 ? 'Próxima semana' : 'Semana del 22');
+    if (date <= 14) return 'Semana pasada';
+    if (date <= 21) return 'Esta semana';
+    return 'Próxima semana';
   }
   
   function renderWithWeeks(days, isPast) {
