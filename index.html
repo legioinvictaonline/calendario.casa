@@ -354,11 +354,9 @@ function getBlocks(day) {
       { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
   } else if (date === 15) {
-    // Domingo 15 feb — familia mañana + diseño corto + comida familia larga + diseño noche
+    // Domingo 15 feb — familia mañana + comida familia + diseño noche
     const famStart = 10 * 60;         // 10:00
-    const famEnd = 11 * 60 + 30;      // 11:30
-    const des1Start = 11 * 60 + 30;   // 11:30
-    const des1End = 12 * 60 + 30;     // 12:30
+    const famEnd = 12 * 60 + 30;      // 12:30 (familia + diseño corto fusionados)
     const comidaStart = 12 * 60 + 30; // 12:30
     const comidaEnd = 18 * 60;        // 18:00
     const des2Start = 18 * 60 + 15;   // 18:15
@@ -367,7 +365,6 @@ function getBlocks(day) {
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
       { start: famStart, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
-      { start: des1Start, end: des1End, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: comidaStart, end: comidaEnd, cls: 'b-family', label: 'Comida / familia', time: true },
       { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
