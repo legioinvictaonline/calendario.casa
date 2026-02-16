@@ -163,7 +163,7 @@
   }
   
   /* Block colors */
-  .b-sleep    { background: #ddd8d0; color: #999; }
+  .b-sleep    { background: #c5bfb5; color: #888; }
   .b-grog     { background: #c9b99a; color: #fff; }
   .b-work     { background: #3a8a9a; color: #fff; }
   .b-break    { background: #6ab06a; color: #fff; }
@@ -354,18 +354,21 @@ function getBlocks(day) {
       { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
   } else if (date === 15) {
-    // Domingo 15 feb — diseño mañana + familia + diseño tarde (sin recreativo)
-    const des1Start = 10 * 60 + 30; // 10:30
-    const des1End = 12 * 60 + 30;   // 12:30
-    const famStart = 13 * 60;        // 13:00
-    const famEnd = 17 * 60;          // 17:00
-    const des2Start = 17 * 60 + 29;  // 17:29
-    const des2End = 21 * 60 + 29;    // 21:29
+    // Domingo 15 feb — familia + diseño corto + comida familia + diseño noche
+    const famStart = 10 * 60;         // 10:00
+    const famEnd = 11 * 60 + 30;      // 11:30
+    const des1Start = 11 * 60 + 30;   // 11:30
+    const des1End = 12 * 60 + 30;     // 12:30
+    const comidaStart = 12 * 60 + 30; // 12:30
+    const comidaEnd = 18 * 60;        // 18:00
+    const des2Start = 18 * 60 + 15;   // 18:15
+    const des2End = 23 * 60 + 15;     // 23:15
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: famStart, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
       { start: des1Start, end: des1End, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: famStart, end: famEnd, cls: 'b-family', label: 'Comida / familia', time: true },
+      { start: comidaStart, end: comidaEnd, cls: 'b-family', label: 'Comida / familia', time: true },
       { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (isWE) {
@@ -462,7 +465,8 @@ function render() {
       
       const timeStr = b.time ? `<span class="time-label">${fmt(startH,startM)}</span><span class="time-label-end">${fmt(endH,endM)}</span>` : '';
       
-      html += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${width}%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${width > 8 ? b.label : ''}${width > 12 ? timeStr : ''}</div>`;
+      const minW = b.cls === 'b-sleep' ? Math.max(width, 7) : width;
+      html += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${minW}%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${minW > 5 ? b.label : ''}${minW > 12 ? timeStr : ''}</div>`;
     
     // Wake time marker
     const wakeMin = minsToday(wh, wm);
