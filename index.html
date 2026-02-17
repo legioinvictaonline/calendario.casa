@@ -170,6 +170,7 @@
   .b-design   { background: #d4884a; color: #fff; }
   .b-family   { background: #4aaa6a; color: #fff; }
   .b-rec      { background: #9a6ab8; color: #fff; }
+  .b-personal { background: #5a8abf; color: #fff; }
   .b-wind     { background: #c0bab0; color: #777; }
   
   .hour-markers {
@@ -266,6 +267,7 @@
     <div class="legend-item"><div class="legend-dot" style="background:#d4884a"></div>Diseño casa ME125</div>
     <div class="legend-item"><div class="legend-dot" style="background:#4aaa6a"></div>Familia</div>
     <div class="legend-item"><div class="legend-dot" style="background:#9a6ab8"></div>Recreativo</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#5a8abf"></div>Personal</div>
   </div>
 
   <div class="hour-markers" id="hour-markers"></div>
@@ -372,19 +374,19 @@ function getBlocks(day) {
       { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (date === 16) {
-    // Lunes 16 feb — despertar tardío 09:02, trabajo partido
+    // Lunes 16 feb — despertar tardío 09:02
     const work1Start = 10 * 60 + 32;  // 10:32
     const work1End = 14 * 60;         // 14:00
-    const famEnd = 16 * 60;           // 16:00
-    const work2End = 18 * 60 + 32;    // 18:32
+    const famEnd = 17 * 60 + 30;      // 17:30
+    const persEnd = 18 * 60 + 30;     // 18:30
     const designEnd = 23 * 60;        // 23:00 (continúa hasta 00:32 del 17)
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
       { start: work1Start, end: work1End, cls: 'b-work', label: 'Trabajo', time: true },
       { start: work1End, end: famEnd, cls: 'b-family', label: 'Comida / familia', time: true },
-      { start: famEnd, end: work2End, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: work2End, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: famEnd, end: persEnd, cls: 'b-personal', label: 'Personal', time: true },
+      { start: persEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (isWE) {
     // Fin de semana default
@@ -558,6 +560,7 @@ function render() {
       'b-design': ['busy-design', `🏠 Diseño ME125 — trabajando juntos hasta las ${fmt(endH,endM)}`],
       'b-family': ['available', '👨‍👩‍👧 Tiempo de familia — disponible'],
       'b-rec': ['available', '🎮 Tiempo recreativo — disponible'],
+      'b-personal': ['available', '🧘 Tiempo personal'],
     };
     
     const [cls, msg] = messages[currentBlock.cls] || ['available', 'Disponible'];
