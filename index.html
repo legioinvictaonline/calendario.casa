@@ -230,7 +230,40 @@
   }
 
   .day-row.past {
-    opacity: 0.45;
+    opacity: 1;
+  }
+  
+  .day-group-past {
+    margin-bottom: 6px;
+  }
+  
+  .dual-timeline {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .timeline-layer {
+    display: flex;
+    position: relative;
+    min-height: 20px;
+    height: 20px;
+  }
+  
+  .timeline-plan {
+    opacity: 1;
+  }
+  
+  .row-label-tag {
+    position: absolute;
+    left: 4px;
+    top: 2px;
+    font-size: 0.55em;
+    font-weight: 600;
+    color: #8a7a60;
+    z-index: 5;
+    letter-spacing: 0.05em;
   }
   
   .past-section summary::-webkit-details-marker { display: none; }
@@ -282,8 +315,8 @@ const DAYS_DATA = [
   [14, 'SÁB', 7, 54, true],
   [15, 'DOM', 7, 59, true],
   [16, 'LUN', 9, 2, false],
-  [17, 'MAR', 7, 34, false],
-  [18, 'MIÉ', 7, 0, false],
+  [17, 'MAR', 7, 28, false],
+  [18, 'MIÉ', 8, 20, false],
   [19, 'JUE', 6, 50, false],
   [20, 'VIE', 6, 48, false],
   [21, 'SÁB', 6, 46, true],
@@ -388,6 +421,21 @@ function getBlocks(day) {
       { start: famEnd, end: persEnd, cls: 'b-personal', label: 'Personal', time: true },
       { start: persEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
+  } else if (date === 18) {
+    // Miércoles 18 feb — empezó tarde (11:00), comida 15:40-17:45, trabajo+diseño
+    const workStart = 11 * 60;         // 11:00
+    const work1End = 15 * 60 + 40;     // 15:40
+    const breakEnd = 17 * 60 + 45;     // 17:45
+    const work2End = 19 * 60 + 5;      // 19:05 (completa 6h)
+    const designEnd = 21 * 60 + 53;    // 21:53
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: workStart, cls: 'b-grog', label: 'Despertar' },
+      { start: workStart, end: work1End, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: work1End, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
+      { start: breakEnd, end: work2End, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: work2End, end: designEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
+    ];
   } else if (isWE) {
     // Fin de semana default
     const workEnd = grogEnd + 240;
@@ -415,6 +463,40 @@ function getBlocks(day) {
       { start: breakEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   }
+}
+
+// What actually happened (null = assume plan was followed)
+function getActualBlocks(day) {
+  const [date, dow, wh, wm, isWE] = day;
+  const wake = minsToday(wh, wm);
+  
+  if (date === 16) {
+    // Lunes 16 feb — igual al plan excepto: familia 18:30-21:30, trabajo 21:30-22:30
+    const wake = minsToday(wh, wm);
+    const grogEnd = wake + 90;
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: 10 * 60 + 32, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 14 * 60, end: 17 * 60 + 30, cls: 'b-family', label: 'Comida / familia', time: true },
+      { start: 17 * 60 + 30, end: 18 * 60 + 30, cls: 'b-personal', label: 'Personal', time: true },
+      { start: 18 * 60 + 30, end: 21 * 60 + 30, cls: 'b-family', label: 'Familia', time: true },
+      { start: 21 * 60 + 30, end: 22 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
+    ];
+  }
+  
+  if (date === 17) {
+    // Martes 17 feb — familia toda la mañana, diseño corto, comida, trabajo nocturno
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: 14 * 60, cls: 'b-family', label: 'Familia', time: true },
+      { start: 14 * 60, end: 15 * 60 + 30, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: 15 * 60 + 30, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
+      { start: 17 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
+    ];
+  }
+  
+  return null; // no actual data = assume plan was followed
 }
 
 function getCurrentStatus() {
@@ -459,14 +541,8 @@ function render() {
   
   let html = '';
   
-  function renderDay(day, isPast) {
-    const [date, dow, wh, wm, isWE] = day;
-    const isToday = todayMonth === 2 && todayDate === date;
-    html += `<div class="day-row ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}">`;
-    html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
-    html += `<div class="timeline">`;
-    
-    const blocks = getBlocks(day);
+  function renderTimeline(blocks, wh, wm, isToday, showWake) {
+    let out = '';
     for (const b of blocks) {
       const clampStart = Math.max(b.start, RANGE_START);
       const clampEnd = Math.min(b.end, RANGE_END);
@@ -483,23 +559,46 @@ function render() {
       const timeStr = b.time ? `<span class="time-label">${fmt(startH,startM)}</span><span class="time-label-end">${fmt(endH,endM)}</span>` : '';
       
       const minW = b.cls === 'b-sleep' ? Math.max(width, 7) : width;
-      html += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${minW}%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${minW > 5 ? b.label : ''}${minW > 12 ? timeStr : ''}</div>`;
-    
-    // Wake time marker
-    const wakeMin = minsToday(wh, wm);
-    if (wakeMin >= RANGE_START && wakeMin <= RANGE_END) {
-      const wakeLeft = ((wakeMin - RANGE_START) / RANGE_TOTAL) * 100;
-      html += `<div class="wake-marker" style="left:${wakeLeft}%">⏰ ${fmt(wh,wm)}</div>`;
-    }
+      let displayLabel = b.label;
+      if (b.cls === 'b-grog') displayLabel = `⏰ ${fmt(wh,wm)}`;
+      out += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${minW}%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${minW > 5 ? displayLabel : ''}${minW > 12 ? timeStr : ''}</div>`;
     }
     
-    // Now line
+    /* wake marker removed — wake time shown in grog block label */
+    
     if (isToday && nowMins >= RANGE_START && nowMins <= RANGE_END) {
       const nowLeft = ((nowMins - RANGE_START) / RANGE_TOTAL) * 100;
-      html += `<div class="now-line" style="left:${nowLeft}%"><div class="now-dot"></div></div>`;
+      out += `<div class="now-line" style="left:${nowLeft}%"><div class="now-dot"></div></div>`;
     }
     
-    html += `</div></div>`;
+    return out;
+  }
+  
+  function renderDay(day, isPast) {
+    const [date, dow, wh, wm, isWE] = day;
+    const isToday = todayMonth === 2 && todayDate === date;
+    const plannedBlocks = getBlocks(day);
+    const actualBlocks = isPast ? getActualBlocks(day) : null;
+    
+    if (actualBlocks) {
+      // Single row, two stacked timelines inside
+      html += `<div class="day-row">`;
+      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
+      html += `<div class="dual-timeline">`;
+      html += `<div class="timeline-layer timeline-real"><span class="row-label-tag">REAL</span>`;
+      html += renderTimeline(actualBlocks, wh, wm, false, true);
+      html += `</div>`;
+      html += `<div class="timeline-layer timeline-plan"><span class="row-label-tag">PLAN</span>`;
+      html += renderTimeline(plannedBlocks, wh, wm, false, true);
+      html += `</div>`;
+      html += `</div></div>`;
+    } else {
+      html += `<div class="day-row ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}">`;
+      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
+      html += `<div class="timeline">`;
+      html += renderTimeline(plannedBlocks, wh, wm, isToday, true);
+      html += `</div></div>`;
+    }
   }
   
   // Helper: get week label for a date (weeks Sun-Sat)
