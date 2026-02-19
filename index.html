@@ -318,19 +318,19 @@ const DAYS_DATA = [
   [17, 'MAR', 7, 28, false],
   [18, 'MIÉ', 8, 20, false],
   [19, 'JUE', 7, 51, false],
-  [20, 'VIE', 6, 48, false],
-  [21, 'SÁB', 6, 46, true],
-  [22, 'DOM', 6, 46, true],
-  [23, 'LUN', 6, 44, false],
-  [24, 'MAR', 6, 42, false],
-  [25, 'MIÉ', 6, 34, false],
-  [26, 'JUE', 6, 32, false],
-  [27, 'VIE', 6, 30, false],
-  [28, 'SÁB', 6, 46, true],
+  [20, 'VIE', 6, 54, false],
+  [21, 'SÁB', 6, 42, true],
+  [22, 'DOM', 6, 38, true],
+  [23, 'LUN', 6, 26, false],
+  [24, 'MAR', 6, 14, false],
+  [25, 'MIÉ', 6, 2, false],
+  [26, 'JUE', 5, 50, false],
+  [27, 'VIE', 5, 48, false],
+  [28, 'SÁB', 6, 34, true],
 ];
 
-// Display range: 6:00 to 23:00 (17 hours)
-const RANGE_START = 6 * 60; // 6:00
+// Display range: 5:30 to 23:00 (17.5 hours)
+const RANGE_START = 5 * 60 + 30; // 5:30
 const RANGE_END = 23 * 60;  // 23:00
 const RANGE_TOTAL = RANGE_END - RANGE_START;
 
@@ -549,7 +549,7 @@ function render() {
   // Hour markers
   const hm = document.getElementById('hour-markers');
   let hmHtml = '';
-  for (let h = 5; h <= 23; h++) {
+  for (let h = 6; h <= 23; h++) {
     hmHtml += `<span>${h}:00</span>`;
   }
   hm.innerHTML = hmHtml;
