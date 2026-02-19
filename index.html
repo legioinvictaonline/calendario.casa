@@ -317,7 +317,7 @@ const DAYS_DATA = [
   [16, 'LUN', 9, 2, false],
   [17, 'MAR', 7, 28, false],
   [18, 'MIÉ', 8, 20, false],
-  [19, 'JUE', 6, 50, false],
+  [19, 'JUE', 7, 51, false],
   [20, 'VIE', 6, 48, false],
   [21, 'SÁB', 6, 46, true],
   [22, 'DOM', 6, 46, true],
@@ -422,19 +422,26 @@ function getBlocks(day) {
       { start: persEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (date === 18) {
-    // Miércoles 18 feb — empezó tarde (11:00), comida 15:40-17:45, trabajo+diseño
-    const workStart = 11 * 60;         // 11:00
-    const work1End = 15 * 60 + 40;     // 15:40
-    const breakEnd = 17 * 60 + 45;     // 17:45
-    const work2End = 19 * 60 + 5;      // 19:05 (completa 6h)
-    const designEnd = 21 * 60 + 53;    // 21:53
+    // Miércoles 18 feb — trabajo fragmentado, comida 14:30-15:30, familia 16:45-17:45
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: workStart, cls: 'b-grog', label: 'Despertar' },
-      { start: workStart, end: work1End, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: work1End, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: breakEnd, end: work2End, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: work2End, end: designEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: wake, end: 11 * 60, cls: 'b-grog', label: 'Despertar' },
+      { start: 11 * 60, end: 14 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 14 * 60 + 30, end: 15 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
+      { start: 15 * 60 + 30, end: 16 * 60 + 45, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 16 * 60 + 45, end: 17 * 60 + 45, cls: 'b-family', label: 'Familia', time: true },
+      { start: 17 * 60 + 45, end: 19 * 60, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 19 * 60, end: 21 * 60 + 53, cls: 'b-design', label: 'Diseño 🏠', time: true },
+    ];
+  } else if (date === 19) {
+    // Jueves 19 feb — plan aprobado
+    // Trabajo: 09:21-15:21 | Comida/familia: 15:21-17:21 | Diseño: 17:21-23:21
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: 9 * 60 + 21, cls: 'b-grog', label: 'Despertar' },
+      { start: 9 * 60 + 21, end: 15 * 60 + 21, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 15 * 60 + 21, end: 17 * 60 + 21, cls: 'b-break', label: 'Comida / familia', time: true },
+      { start: 17 * 60 + 21, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (isWE) {
     // Fin de semana default
@@ -493,6 +500,19 @@ function getActualBlocks(day) {
       { start: 14 * 60, end: 15 * 60 + 30, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: 15 * 60 + 30, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
       { start: 17 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
+    ];
+  }
+
+  if (date === 18) {
+    // Miércoles 18 feb (real) — la sesión de trabajo de la tarde se extendió hasta 23:30; sin diseño
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: 11 * 60, cls: 'b-grog', label: 'Despertar' },
+      { start: 11 * 60, end: 14 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 14 * 60 + 30, end: 15 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
+      { start: 15 * 60 + 30, end: 16 * 60 + 45, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 16 * 60 + 45, end: 17 * 60 + 45, cls: 'b-family', label: 'Familia', time: true },
+      { start: 17 * 60 + 45, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
     ];
   }
   
