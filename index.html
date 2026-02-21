@@ -443,15 +443,15 @@ function getBlocks(day) {
       { start: 17 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
     ];
   } else if (date === 22) {
-    // Domingo 22 feb — diseño mañana y tarde, familia, recreativo
-    const grogEnd = wake + 90;
+    // Domingo 22 feb — trabajo temprano, diseño, familia, diseño, recreativo
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: grogEnd + 240, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: grogEnd + 240, end: grogEnd + 480, cls: 'b-family', label: 'Familia', time: true },
-      { start: grogEnd + 480, end: grogEnd + 720, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: grogEnd + 720, end: RANGE_END, cls: 'b-rec', label: 'Recreativo', time: true },
+      { start: wake, end: 6 * 60 + 45, cls: 'b-grog', label: 'Despertar' },
+      { start: 6 * 60 + 45, end: 9 * 60 + 45, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 9 * 60 + 45, end: 12 * 60 + 8, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: 12 * 60 + 8, end: 16 * 60 + 8, cls: 'b-family', label: 'Familia', time: true },
+      { start: 16 * 60 + 8, end: 20 * 60 + 8, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: 20 * 60 + 8, end: RANGE_END, cls: 'b-rec', label: 'Recreativo', time: true },
     ];
   } else if (date === 21) {
     // Sábado 21 feb — plan: trabajo 2h, familia 4h, comida 2h, diseño 4h, recreativo
