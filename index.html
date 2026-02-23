@@ -493,8 +493,7 @@ function getBlocks(day) {
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: 12 * 60 + 30, cls: 'b-grog', label: '' },
-      { start: 12 * 60 + 30, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60, end: 14 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
+      { start: 12 * 60 + 30, end: 14 * 60 + 30, cls: 'b-break', label: 'Descanso', time: true },
       { start: 14 * 60 + 30, end: 16 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
       { start: 16 * 60 + 30, end: 17 * 60, cls: 'b-break', label: 'Descanso', time: true },
       { start: 17 * 60, end: 19 * 60, cls: 'b-work', label: 'Trabajo', time: true },
