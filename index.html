@@ -321,7 +321,7 @@ const DAYS_DATA = [
   [20, 'VIE', 7, 32, false],
   [21, 'SÁB', 6, 46, true],
   [22, 'DOM', 7, 38, true],
-  [23, 'LUN', 6, 26, false], // override in getBlocks
+  [23, 'LUN', 8, 30, false], // override in getBlocks
   [24, 'MAR', 6, 14, false],
   [25, 'MIÉ', 6, 2, false],
   [26, 'JUE', 5, 50, false],
@@ -489,16 +489,16 @@ function getBlocks(day) {
       { start: desEnd, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
   } else if (date === 23) {
-    // Lunes 23 feb — trabajo mañana, comida, diseño 2h, trabajo 4h noche
-    const workEnd = grogEnd + 360;
-    const breakEnd = workEnd + 120;
+    // Lunes 23 feb — ajuste real: trabajo fragmentado desde 12:30
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: 15 * 60 + 56, end: 17 * 60 + 56, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: 17 * 60 + 56, end: 21 * 60 + 56, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: wake, end: 12 * 60 + 30, cls: 'b-grog', label: '' },
+      { start: 12 * 60 + 30, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 14 * 60, end: 14 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
+      { start: 14 * 60 + 30, end: 16 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 16 * 60 + 30, end: 17 * 60, cls: 'b-break', label: 'Descanso', time: true },
+      { start: 17 * 60, end: 19 * 60, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 19 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
     ];
   } else {
     // Entre semana default
@@ -583,6 +583,17 @@ function getActualBlocks(day) {
       { start: 18 * 60 + 30, end: 22 * 60, cls: 'b-rec', label: 'Recreativo', time: true },
       { start: 22 * 60, end: RANGE_END, cls: 'b-family', label: 'Familia', time: true },
     ];
+  } else if (date === 22) {
+    // Domingo 22 feb (real) — trabajo mañana, familia, comida larga, familia noche (sin trabajo tarde)
+    const wake = minsToday(7, 38);
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: 8 * 60, cls: 'b-family', label: '' },
+      { start: 8 * 60, end: 11 * 60, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 11 * 60, end: 15 * 60, cls: 'b-family', label: 'Familia', time: true },
+      { start: 15 * 60, end: 18 * 60, cls: 'b-break', label: 'Comida', time: true },
+      { start: 18 * 60, end: RANGE_END, cls: 'b-family', label: 'Familia', time: true },
+    ];
   } else if (date === 21) {
     // Sábado 21 feb (real) — despertó 9:26, familia 1h, trabajo 2h, comida 2h, trabajo 6h
     return [
@@ -661,7 +672,7 @@ function render() {
       const minW = b.cls === 'b-sleep' ? Math.max(width, 7) : Math.max(width, 5);
       let displayLabel = b.label;
       if (b.cls === 'b-grog' && showGrogClock !== false) { const gH = Math.floor(b.start / 60); const gM = b.start % 60; displayLabel = `⏰ ${fmt(gH,gM)}`; }
-      out += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${minW}%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${minW > 5 ? displayLabel : ''}${minW > 12 ? timeStr : ''}</div>`;
+      out += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${minW}%;height:100%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${minW > 5 ? displayLabel : ''}${minW > 12 ? timeStr : ''}</div>`;
     }
     
     /* wake marker removed — wake time shown in grog block label */
