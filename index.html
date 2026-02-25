@@ -323,8 +323,8 @@ const DAYS_DATA = [
   [22, 'DOM', 7, 38, true],
   [23, 'LUN', 8, 30, false], // override in getBlocks
   [24, 'MAR', 6, 56, false],
-  [25, 'MIÉ', 7, 58, false],
-  [26, 'JUE', 5, 50, false],
+  [25, 'MIÉ', 10, 26, false],
+  [26, 'JUE', 6, 56, false],
   [27, 'VIE', 5, 48, false],
   [28, 'SÁB', 6, 34, true],
 ];
@@ -487,6 +487,17 @@ function getBlocks(day) {
       { start: workEnd, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
       { start: famEnd, end: desEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: desEnd, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
+    ];
+  } else if (date === 25) {
+    // Miércoles 25 feb — trabajo cortado por comida 14-16, reanuda, break 30min, diseño hasta 22:46
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 14 * 60, end: 16 * 60, cls: 'b-break', label: 'Comida', time: true },
+      { start: 16 * 60, end: 19 * 60 + 56, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 19 * 60 + 56, end: 20 * 60 + 26, cls: 'b-break', label: 'Descanso', time: true },
+      { start: 20 * 60 + 26, end: 22 * 60 + 46, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (date === 24) {
     // Martes 24 feb — despertar 2h, trabajo, comida 14-16, trabajo 16-23
