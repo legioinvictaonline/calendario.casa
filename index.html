@@ -494,10 +494,10 @@ function getBlocks(day) {
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
       { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
       { start: grogEnd, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60, end: 16 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 16 * 60, end: 19 * 60 + 56, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 19 * 60 + 56, end: 20 * 60 + 26, cls: 'b-break', label: 'Descanso', time: true },
-      { start: 20 * 60 + 26, end: 22 * 60 + 46, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 14 * 60, end: 17 * 60, cls: 'b-break', label: 'Comida', time: true },
+      { start: 17 * 60, end: 20 * 60 + 56, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 20 * 60 + 56, end: 21 * 60 + 26, cls: 'b-break', label: 'Descanso', time: true },
+      { start: 21 * 60 + 26, end: 22 * 60 + 46, cls: 'b-work', label: 'Trabajo', time: true },
     ];
   } else if (date === 24) {
     // Martes 24 feb — despertar 2h, trabajo, comida 14-16, trabajo 16-23
