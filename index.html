@@ -325,7 +325,7 @@ const DAYS_DATA = [
   [24, 'MAR', 6, 56, false],
   [25, 'MIÉ', 10, 26, false],
   [26, 'JUE', 7, 47, false],
-  [27, 'VIE', 6, 53, false],
+  [27, 'VIE', 8, 18, false],
   [28, 'SÁB', 6, 34, true],
 ];
 
@@ -500,13 +500,18 @@ function getBlocks(day) {
       { start: 20 * 60, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (date === 27) {
-    // Viernes 27 feb — estándar: 6h trabajo, 2h comida/familia, 6h diseño
+    // Viernes 27 feb — 2h despertar, 30min familia, 6h trabajo, 2h comida, diseño
+    const grogEnd2 = wake + 120; // 10:18
+    const famEnd = grogEnd2 + 30; // 10:48
+    const workEnd = famEnd + 360; // 16:48
+    const breakEnd = workEnd + 120; // 18:48
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: 14 * 60 + 23, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60 + 23, end: 16 * 60 + 23, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: 16 * 60 + 23, end: 22 * 60 + 23, cls: 'b-design', label: 'Diseño 🏠', time: true },
+      { start: wake, end: grogEnd2, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd2, end: famEnd, cls: 'b-family', label: 'Familia', time: false },
+      { start: famEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
+      { start: breakEnd, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
   } else if (date === 25) {
     // Miércoles 25 feb — trabajo cortado por comida 14-16, reanuda, break 30min, diseño hasta 22:46
@@ -658,6 +663,21 @@ function getActualBlocks(day) {
     ];
   }
 
+  if (date === 26) {
+    // Jueves 26 feb (real) — trabajo corrido hasta 15:30, comida, trabajo, micro-break, trabajo
+    const wake = minsToday(7, 47);
+    const grogEnd = wake + 90;
+    return [
+      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
+      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
+      { start: grogEnd, end: 15 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 15 * 60 + 30, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
+      { start: 17 * 60 + 30, end: 22 * 60 + 15, cls: 'b-work', label: 'Trabajo', time: true },
+      { start: 22 * 60 + 15, end: 22 * 60 + 30, cls: 'b-break', label: '', time: false },
+      { start: 22 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
+    ];
+  }
+
   return null; // no actual data = assume plan was followed
 }
 
@@ -764,11 +784,22 @@ function render() {
     }
   }
   
-  // Helper: get week label for a date (weeks Sun-Sat)
+  // Helper: get week start (Sun-Sat weeks) for a feb 2026 date
+  function getWeekStart(date) {
+    const d = new Date(2026, 1, date); // Feb 2026
+    const dow = d.getDay(); // 0=Sun, 1=Mon, ... 6=Sat
+    return date - dow; // Sunday of that week
+  }
+  
   function getWeekLabel(date) {
-    if (date <= 14) return 'Semana pasada';
-    if (date <= 21) return 'Esta semana';
-    return 'Próxima semana';
+    const todayWeekStart = getWeekStart(todayDate);
+    const dateWeekStart = getWeekStart(date);
+    const diff = dateWeekStart - todayWeekStart;
+    if (diff === 0) return 'Esta semana';
+    if (diff === 7) return 'Próxima semana';
+    if (diff === -7) return 'Semana pasada';
+    if (diff < -7) return 'Este mes';
+    return `En ${Math.round(diff / 7)} semanas`;
   }
   
   function renderWithWeeks(days, isPast) {
