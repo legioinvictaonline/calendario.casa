@@ -289,7 +289,7 @@
 <div class="container">
   <header>
     <h1>📆 Calendario CaSa</h1>
-    <p id="subtitle">Febrero 2026</p>
+    <p id="subtitle">Febrero — Marzo 2026</p>
   </header>
 
   <div id="status-banner" class="status-banner available"></div>
@@ -309,24 +309,39 @@
 
 <script>
 const DAYS_DATA = [
-  // [date, dow, wake_h, wake_m, isWeekend]
-  [12, 'JUE', 9, 13, false],
-  [13, 'VIE', 8, 42, false],
-  [14, 'SÁB', 7, 54, true],
-  [15, 'DOM', 7, 59, true],
-  [16, 'LUN', 9, 2, false],
-  [17, 'MAR', 7, 28, false],
-  [18, 'MIÉ', 8, 20, false],
-  [19, 'JUE', 7, 51, false],
-  [20, 'VIE', 7, 32, false],
-  [21, 'SÁB', 6, 46, true],
-  [22, 'DOM', 7, 38, true],
-  [23, 'LUN', 8, 30, false], // override in getBlocks
-  [24, 'MAR', 6, 56, false],
-  [25, 'MIÉ', 10, 26, false],
-  [26, 'JUE', 7, 47, false],
-  [27, 'VIE', 8, 18, false],
-  [28, 'SÁB', 6, 34, true],
+  // [date, dow, wake_h, wake_m, isWeekend, month]
+  [12, 'JUE', 9, 13, false, 2],
+  [13, 'VIE', 8, 42, false, 2],
+  [14, 'SÁB', 7, 54, true, 2],
+  [15, 'DOM', 7, 59, true, 2],
+  [16, 'LUN', 9, 2, false, 2],
+  [17, 'MAR', 7, 28, false, 2],
+  [18, 'MIÉ', 8, 20, false, 2],
+  [19, 'JUE', 7, 51, false, 2],
+  [20, 'VIE', 7, 32, false, 2],
+  [21, 'SÁB', 6, 46, true, 2],
+  [22, 'DOM', 7, 38, true, 2],
+  [23, 'LUN', 8, 30, false, 2], // override in getBlocks
+  [24, 'MAR', 6, 56, false, 2],
+  [25, 'MIÉ', 10, 26, false, 2],
+  [26, 'JUE', 7, 47, false, 2],
+  [27, 'VIE', 8, 18, false, 2],
+  [28, 'SÁB', 6, 34, true, 2],
+  // Marzo 2026 — weekdays: -8min/día desde 07:38; weekends: piso en alba
+  [1, 'DOM', 9, 20, true, 3],
+  [2, 'LUN', 7, 38, false, 3],
+  [3, 'MAR', 7, 30, false, 3],
+  [4, 'MIÉ', 7, 22, false, 3],
+  [5, 'JUE', 7, 14, false, 3],
+  [6, 'VIE', 7, 6, false, 3],
+  [7, 'SÁB', 6, 58, true, 3],
+  [8, 'DOM', 6, 50, true, 3],
+  [9, 'LUN', 6, 42, false, 3],
+  [10, 'MAR', 6, 34, false, 3],
+  [11, 'MIÉ', 6, 26, false, 3],
+  [12, 'JUE', 6, 18, false, 3],
+  [13, 'VIE', 6, 10, false, 3],
+  [14, 'SÁB', 6, 25, true, 3],
 ];
 
 // Display range: 5:30 to 23:00 (17.5 hours)
@@ -341,12 +356,12 @@ function fmt(h, m) {
 }
 
 function getBlocks(day) {
-  const [date, dow, wh, wm, isWE] = day;
+  const [date, dow, wh, wm, isWE, month] = day;
   const wake = minsToday(wh, wm);
   const grogEnd = wake + 90;
   
-  // Day-specific overrides
-  if (date === 12) {
+  // Day-specific overrides (February)
+  if (month === 2 && date === 12) {
     // Jueves 12 feb — trabajo mañana y tarde
     const workEnd = grogEnd + 360;
     const breakEnd = workEnd + 120;
@@ -358,7 +373,7 @@ function getBlocks(day) {
       { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
       { start: breakEnd, end: Math.min(work2End, RANGE_END), cls: 'b-work', label: 'Trabajo', time: true },
     ];
-  } else if (date === 13) {
+  } else if (month === 2 && date === 13) {
     // Viernes 13 feb — custom
     const workEnd = 12 * 60 + 30; // 12:30
     const designEnd = 14 * 60 + 30; // 14:30
@@ -374,7 +389,7 @@ function getBlocks(day) {
       { start: famEnd, end: work2End, cls: 'b-work', label: 'Trabajo', time: true },
       { start: work2End, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
-  } else if (date === 14) {
+  } else if (month === 2 && date === 14) {
     // Sábado 14 feb — custom
     const designEnd1 = 13 * 60; // 13:00
     const famEnd = 15 * 60; // 15:00
@@ -388,7 +403,7 @@ function getBlocks(day) {
       { start: famEnd, end: designEnd2, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
-  } else if (date === 15) {
+  } else if (month === 2 && date === 15) {
     // Domingo 15 feb — familia + diseño corto + comida familia + diseño noche
     const famStart = 10 * 60;         // 10:00
     const famEnd = 11 * 60 + 30;      // 11:30
@@ -406,7 +421,7 @@ function getBlocks(day) {
       { start: comidaStart, end: comidaEnd, cls: 'b-family', label: 'Comida / familia', time: true },
       { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
-  } else if (date === 16) {
+  } else if (month === 2 && date === 16) {
     // Lunes 16 feb — despertar tardío 09:02
     const work1Start = 10 * 60 + 32;  // 10:32
     const work1End = 14 * 60;         // 14:00
@@ -421,7 +436,7 @@ function getBlocks(day) {
       { start: famEnd, end: persEnd, cls: 'b-personal', label: 'Personal', time: true },
       { start: persEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
-  } else if (date === 18) {
+  } else if (month === 2 && date === 18) {
     // Miércoles 18 feb — trabajo fragmentado, comida 14:30-15:30, familia 16:45-17:45
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -433,7 +448,7 @@ function getBlocks(day) {
       { start: 17 * 60 + 45, end: 19 * 60, cls: 'b-work', label: 'Trabajo', time: true },
       { start: 19 * 60, end: 21 * 60 + 53, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
-  } else if (date === 20) {
+  } else if (month === 2 && date === 20) {
     // Viernes 20 feb — trabajo 10-16, comida 16-17:30, trabajo 17:30-23
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -442,7 +457,7 @@ function getBlocks(day) {
       { start: 16 * 60, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
       { start: 17 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
     ];
-  } else if (date === 22) {
+  } else if (month === 2 && date === 22) {
     // Domingo 22 feb — familia, trabajo, familia, comida, familia, trabajo
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -453,7 +468,7 @@ function getBlocks(day) {
       { start: 17 * 60, end: 19 * 60, cls: 'b-family', label: 'Familia', time: true },
       { start: 19 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
     ];
-  } else if (date === 21) {
+  } else if (month === 2 && date === 21) {
     // Sábado 21 feb — plan: trabajo 2h, familia 4h, comida 2h, diseño 4h, recreativo
     const grogEnd = wake + 90; // 0816
     return [
@@ -465,7 +480,7 @@ function getBlocks(day) {
       { start: grogEnd + 480, end: grogEnd + 720, cls: 'b-design', label: 'Diseño 🏠' },
       { start: grogEnd + 720, end: RANGE_END, cls: 'b-rec', label: 'Recreativo' },
     ];
-  } else if (date === 19) {
+  } else if (month === 2 && date === 19) {
     // Jueves 19 feb — plan original
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -488,7 +503,7 @@ function getBlocks(day) {
       { start: famEnd, end: desEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
       { start: desEnd, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
     ];
-  } else if (date === 26) {
+  } else if (month === 2 && date === 26) {
     // Jueves 26 feb — trabajo desde 11:30, 6h total, comida 13:30-15:30, diseño al final
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -499,7 +514,7 @@ function getBlocks(day) {
       { start: 19 * 60 + 30, end: 20 * 60, cls: 'b-break', label: '', time: false },
       { start: 20 * 60, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
-  } else if (date === 27) {
+  } else if (month === 2 && date === 27) {
     // Viernes 27 feb — 2h despertar, 30min familia, 6h trabajo, 2h comida, diseño
     const grogEnd2 = wake + 120; // 10:18
     const famEnd = grogEnd2 + 30; // 10:48
@@ -513,7 +528,7 @@ function getBlocks(day) {
       { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
       { start: breakEnd, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
     ];
-  } else if (date === 25) {
+  } else if (month === 2 && date === 25) {
     // Miércoles 25 feb — trabajo cortado por comida 14-16, reanuda, break 30min, diseño hasta 22:46
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -524,7 +539,7 @@ function getBlocks(day) {
       { start: 20 * 60 + 56, end: 21 * 60 + 26, cls: 'b-break', label: 'Descanso', time: true },
       { start: 21 * 60 + 26, end: 22 * 60 + 46, cls: 'b-work', label: 'Trabajo', time: true },
     ];
-  } else if (date === 24) {
+  } else if (month === 2 && date === 24) {
     // Martes 24 feb — despertar 2h, trabajo, comida 14-16, trabajo 16-23
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -533,7 +548,7 @@ function getBlocks(day) {
       { start: 14 * 60, end: 16 * 60, cls: 'b-break', label: 'Comida', time: true },
       { start: 16 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
     ];
-  } else if (date === 23) {
+  } else if (month === 2 && date === 23) {
     // Lunes 23 feb — ajuste real: trabajo fragmentado desde 12:30
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -561,10 +576,11 @@ function getBlocks(day) {
 
 // What actually happened (null = assume plan was followed)
 function getActualBlocks(day) {
-  const [date, dow, wh, wm, isWE] = day;
+  const [date, dow, wh, wm, isWE, month] = day;
   const wake = minsToday(wh, wm);
+  if (month !== 2) return null; // March: no actuals yet
   
-  if (date === 16) {
+  if (month === 2 && date === 16) {
     // Lunes 16 feb — igual al plan excepto: familia 18:30-21:30, trabajo 21:30-22:30
     const wake = minsToday(wh, wm);
     const grogEnd = wake + 90;
@@ -579,7 +595,7 @@ function getActualBlocks(day) {
     ];
   }
   
-  if (date === 17) {
+  if (month === 2 && date === 17) {
     // Martes 17 feb — familia toda la mañana, diseño corto, comida, trabajo nocturno
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -590,7 +606,7 @@ function getActualBlocks(day) {
     ];
   }
 
-  if (date === 18) {
+  if (month === 2 && date === 18) {
     // Miércoles 18 feb (real) — la sesión de trabajo de la tarde se extendió hasta 23:30; sin diseño
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -603,7 +619,7 @@ function getActualBlocks(day) {
     ];
   }
 
-  if (date === 19) {
+  if (month === 2 && date === 19) {
     // Jueves 19 feb (real) — trabajo cortado a 12:21, familia 3h, comida 1h, diseño 1h, trabajo hasta 22:00
     return [
       { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
@@ -616,7 +632,7 @@ function getActualBlocks(day) {
     ];
   }
   
-  if (date === 20) {
+  if (month === 2 && date === 20) {
     // Viernes 20 feb (real) — trabajo hasta 17, comida 17-17:30, trabajo 17:30-18:30, recreativo, familia
     return [
       { start: RANGE_START, end: 7 * 60 + 32, cls: 'b-sleep', label: '💤' },
@@ -627,7 +643,7 @@ function getActualBlocks(day) {
       { start: 18 * 60 + 30, end: 22 * 60, cls: 'b-rec', label: 'Recreativo', time: true },
       { start: 22 * 60, end: RANGE_END, cls: 'b-family', label: 'Familia', time: true },
     ];
-  } else if (date === 22) {
+  } else if (month === 2 && date === 22) {
     // Domingo 22 feb (real) — trabajo mañana, familia, comida larga, familia noche (sin trabajo tarde)
     const wake = minsToday(7, 38);
     return [
@@ -638,7 +654,7 @@ function getActualBlocks(day) {
       { start: 15 * 60, end: 18 * 60, cls: 'b-break', label: 'Comida', time: true },
       { start: 18 * 60, end: RANGE_END, cls: 'b-family', label: 'Familia', time: true },
     ];
-  } else if (date === 21) {
+  } else if (month === 2 && date === 21) {
     // Sábado 21 feb (real) — despertó 9:26, familia 1h, trabajo 2h, comida 2h, trabajo 6h
     return [
       { start: RANGE_START, end: 9 * 60 + 26, cls: 'b-sleep', label: '💤' },
@@ -650,7 +666,7 @@ function getActualBlocks(day) {
     ];
   }
 
-  if (date === 25) {
+  if (month === 2 && date === 25) {
     // Miércoles 25 feb (real) — trabajo hasta 16, comida 16-18, trabajo 18-23
     const wake = minsToday(10, 26);
     const grogEnd = wake + 90;
@@ -663,7 +679,7 @@ function getActualBlocks(day) {
     ];
   }
 
-  if (date === 26) {
+  if (month === 2 && date === 26) {
     // Jueves 26 feb (real) — trabajo corrido hasta 15:30, comida, trabajo, micro-break, trabajo
     const wake = minsToday(7, 47);
     const grogEnd = wake + 90;
@@ -685,9 +701,8 @@ function getCurrentStatus() {
   const now = new Date();
   const today = now.getDate();
   const month = now.getMonth() + 1;
-  if (month !== 2) return null;
   
-  const dayData = DAYS_DATA.find(d => d[0] === today);
+  const dayData = DAYS_DATA.find(d => d[0] === today && d[5] === month);
   if (!dayData) return null;
   
   const nowMins = now.getHours() * 60 + now.getMinutes();
@@ -718,9 +733,9 @@ function render() {
   hm.innerHTML = hmHtml;
   
   // Split days: today, future, past
-  const todayData = DAYS_DATA.filter(d => todayMonth === 2 && d[0] === todayDate);
-  const futureDays = DAYS_DATA.filter(d => todayMonth !== 2 || d[0] > todayDate);
-  const pastDays = DAYS_DATA.filter(d => todayMonth === 2 && d[0] < todayDate).reverse(); // most recent first
+  const todayData = DAYS_DATA.filter(d => d[5] === todayMonth && d[0] === todayDate);
+  const futureDays = DAYS_DATA.filter(d => d[5] > todayMonth || (d[5] === todayMonth && d[0] > todayDate));
+  const pastDays = DAYS_DATA.filter(d => d[5] < todayMonth || (d[5] === todayMonth && d[0] < todayDate)).reverse(); // most recent first
   
   let html = '';
   
@@ -759,14 +774,16 @@ function render() {
   
   function renderDay(day, isPast) {
     const [date, dow, wh, wm, isWE] = day;
-    const isToday = todayMonth === 2 && todayDate === date;
+    const isToday = todayMonth === day[5] && todayDate === date;
     const plannedBlocks = getBlocks(day);
     const actualBlocks = getActualBlocks(day);
     
     if (actualBlocks) {
       // Single row, two stacked timelines inside
       html += `<div class="day-row ${isToday ? 'today' : ''}">`;
-      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
+      const monthNames = {2: 'feb', 3: 'mar'};
+      const mName = monthNames[day[5]] || 'feb';
+      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} ${mName}</span></div>`;
       html += `<div class="dual-timeline">`;
       html += `<div class="timeline-layer timeline-real"><span class="row-label-tag">REAL</span>`;
       html += renderTimeline(actualBlocks, wh, wm, isToday, true);
@@ -776,36 +793,38 @@ function render() {
       html += `</div>`;
       html += `</div></div>`;
     } else {
+      const monthNames2 = {2: 'feb', 3: 'mar'};
+      const mName2 = monthNames2[day[5]] || 'feb';
       html += `<div class="day-row ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}">`;
-      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
+      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} ${mName2}</span></div>`;
       html += `<div class="timeline">`;
       html += renderTimeline(plannedBlocks, wh, wm, isToday, true);
       html += `</div></div>`;
     }
   }
   
-  // Helper: get week start (Sun-Sat weeks) for a feb 2026 date
-  function getWeekStart(date) {
-    const d = new Date(2026, 1, date); // Feb 2026
-    const dow = d.getDay(); // 0=Sun, 1=Mon, ... 6=Sat
-    return date - dow; // Sunday of that week
+  // Helper: get week start (Sun-Sat weeks) for any 2026 date
+  function getWeekStartDate(month, date) {
+    const d = new Date(2026, month - 1, date);
+    const dow = d.getDay(); // 0=Sun
+    return new Date(2026, month - 1, date - dow);
   }
   
-  function getWeekLabel(date) {
-    const todayWeekStart = getWeekStart(todayDate);
-    const dateWeekStart = getWeekStart(date);
-    const diff = dateWeekStart - todayWeekStart;
-    if (diff === 0) return 'Esta semana';
-    if (diff === 7) return 'Próxima semana';
-    if (diff === -7) return 'Semana pasada';
-    if (diff < -7) return 'Este mes';
-    return `En ${Math.round(diff / 7)} semanas`;
+  function getWeekLabel(month, date) {
+    const todayWS = getWeekStartDate(todayMonth, todayDate).getTime();
+    const dateWS = getWeekStartDate(month, date).getTime();
+    const diffDays = Math.round((dateWS - todayWS) / 86400000);
+    if (diffDays === 0) return 'Esta semana';
+    if (diffDays === 7) return 'Próxima semana';
+    if (diffDays === -7) return 'Semana pasada';
+    if (diffDays < -7) return 'Anteriores';
+    return \`En ${Math.round(diffDays / 7)} semanas\`;
   }
   
   function renderWithWeeks(days, isPast) {
     let lastWeek = '';
     for (const day of days) {
-      const wl = getWeekLabel(day[0]);
+      const wl = getWeekLabel(day[5], day[0]);
       if (wl !== lastWeek) {
         if (lastWeek) html += '<div style="height:8px"></div>';
         html += `<div class="week-label">${wl}</div>`;
