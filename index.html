@@ -12,214 +12,52 @@
 <title>Calendario CaSa</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-  
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #faf9f7;
-    color: #2a2a2a;
-    padding: 20px;
-    min-height: 100vh;
+    background: #faf9f7; color: #2a2a2a; padding: 20px; min-height: 100vh;
   }
-  
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  header {
-    text-align: center;
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e0ddd8;
-  }
-  
-  header h1 {
-    font-weight: 300;
-    font-size: 1.6em;
-    letter-spacing: 0.05em;
-    color: #8a7a60;
-  }
-  
-  header p {
-    font-size: 0.85em;
-    color: #999;
-    margin-top: 6px;
-  }
-  
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
-    margin-bottom: 28px;
-    font-size: 0.8em;
-  }
-  
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .legend-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-  }
-  
-  .week-label {
-    font-size: 0.75em;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #8a7a60;
-    margin: 24px 0 12px 0;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e8e5e0;
-  }
-  
-  .day-row {
-    display: flex;
-    align-items: stretch;
-    margin-bottom: 6px;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #f0eeeb;
-  }
-  
-  .day-row.today {
-    outline: 2px solid #8a7a60;
-    outline-offset: 1px;
-  }
-  
-  .day-label {
-    width: 90px;
-    min-width: 90px;
-    padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #e8e5e0;
-    font-size: 0.78em;
-  }
-  
-  .day-label .dow {
-    font-weight: 600;
-    font-size: 1.05em;
-    color: #5a4a30;
-  }
-  
-  .day-label .date {
-    color: #999;
-    font-size: 0.85em;
-  }
-  
-  .timeline {
-    flex: 1;
-    display: flex;
-    position: relative;
-    min-height: 44px;
-  }
-  
-  .block {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.65em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: rgba(255,255,255,0.95);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    padding: 2px 4px;
-    line-height: 1.2;
-    cursor: default;
-    transition: filter 0.15s;
-  }
-  
-  .block:hover {
-    filter: brightness(1.2);
-  }
-  
-  .block .time-label {
-    position: absolute;
-    bottom: 2px;
-    left: 4px;
-    font-size: 0.85em;
-    opacity: 0.5;
-    font-weight: 400;
-  }
-  
-  .block .time-label-end {
-    position: absolute;
-    bottom: 2px;
-    right: 4px;
-    font-size: 0.85em;
-    opacity: 0.5;
-    font-weight: 400;
-  }
-  
-  /* Block colors */
-  .b-sleep    { background: #c5bfb5; color: #888; }
-  .b-grog     { background: #c9b99a; color: #fff; }
-  .b-work     { background: #3a8a9a; color: #fff; }
-  .b-break    { background: #6ab06a; color: #fff; }
-  .b-design   { background: #d4884a; color: #fff; }
-  .b-family   { background: #4aaa6a; color: #fff; }
-  .b-rec      { background: #9a6ab8; color: #fff; }
+  .container { max-width: 900px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid #e0ddd8; }
+  header h1 { font-weight: 300; font-size: 1.6em; letter-spacing: 0.05em; color: #8a7a60; }
+  header p { font-size: 0.85em; color: #999; margin-top: 6px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 28px; font-size: 0.8em; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+  .week-label { font-size: 0.75em; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #8a7a60; margin: 24px 0 12px 0; padding-bottom: 6px; border-bottom: 1px solid #e8e5e0; }
+  .day-row { display: flex; align-items: stretch; margin-bottom: 6px; border-radius: 6px; overflow: hidden; background: #f0eeeb; }
+  .day-row.today { outline: 2px solid #8a7a60; outline-offset: 1px; }
+  .day-label { width: 90px; min-width: 90px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; background: #e8e5e0; font-size: 0.78em; }
+  .day-label .dow { font-weight: 600; font-size: 1.05em; color: #5a4a30; }
+  .day-label .date { color: #999; font-size: 0.85em; }
+  .timeline { flex: 1; display: flex; position: relative; min-height: 44px; }
+  .block { display: flex; align-items: center; justify-content: center; font-size: 0.65em; font-weight: 500; letter-spacing: 0.02em; color: rgba(255,255,255,0.95); position: relative; overflow: hidden; text-align: center; padding: 2px 4px; line-height: 1.2; cursor: default; transition: filter 0.15s; }
+  .block:hover { filter: brightness(1.2); }
+  .block .time-label { position: absolute; bottom: 2px; left: 4px; font-size: 0.85em; opacity: 0.5; font-weight: 400; }
+  .block .time-label-end { position: absolute; bottom: 2px; right: 4px; font-size: 0.85em; opacity: 0.5; font-weight: 400; }
+  .b-sleep { background: #c5bfb5; color: #888; }
+  .b-grog { background: #c9b99a; color: #fff; }
+  .b-work { background: #3a8a9a; color: #fff; }
+  .b-break { background: #6ab06a; color: #fff; }
+  .b-design { background: #d4884a; color: #fff; }
+  .b-family { background: #4aaa6a; color: #fff; }
+  .b-rec { background: #9a6ab8; color: #fff; }
   .b-personal { background: #5a8abf; color: #fff; }
-  .b-wind     { background: #c0bab0; color: #777; }
-  
-  .hour-markers {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 0 4px 90px;
-    margin-bottom: 2px;
-  }
-  
-  .hour-markers span {
-    font-size: 0.6em;
-    color: #bbb;
-    width: 0;
-    text-align: center;
-  }
-  
-  .now-line {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: #e84040;
-    z-index: 10;
-    pointer-events: none;
-  }
-  
-  .wake-marker {
-    position: absolute;
-    bottom: 2px;
-    transform: translateX(-50%);
-    font-size: 0.6em;
-    color: #8a7a60;
-    font-weight: 600;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 5;
-  }
-  
-  .now-dot {
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #e84040;
-  }
-  
-  /* Mobile */
+  .b-wind { background: #c0bab0; color: #777; }
+  .hour-markers { display: flex; justify-content: space-between; padding: 0 0 4px 90px; margin-bottom: 2px; }
+  .hour-markers span { font-size: 0.6em; color: #bbb; width: 0; text-align: center; }
+  .now-line { position: absolute; top: 0; bottom: 0; width: 2px; background: #e84040; z-index: 10; pointer-events: none; }
+  .now-dot { position: absolute; top: -3px; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: #e84040; }
+  .dual-timeline { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .timeline-layer { display: flex; position: relative; min-height: 20px; height: 20px; }
+  .row-label-tag { position: absolute; left: 4px; top: 2px; font-size: 0.55em; font-weight: 600; color: #8a7a60; z-index: 5; letter-spacing: 0.05em; }
+  .past-section summary::-webkit-details-marker { display: none; }
+  .status-banner { text-align: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 24px; font-size: 0.9em; font-weight: 400; }
+  .status-banner.available { background: #e8f5e8; color: #3a7a3a; border: 1px solid #c0e0c0; }
+  .status-banner.busy-work { background: #e0f2f5; color: #2a7a8a; border: 1px solid #b0d8e0; }
+  .status-banner.busy-design { background: #fdf0e0; color: #b07030; border: 1px solid #e8d0b0; }
+  .status-banner.sleeping { background: #edebe8; color: #999; border: 1px solid #ddd; }
+  .status-banner.waking { background: #f5f0e0; color: #8a7a50; border: 1px solid #e0d8c0; }
   @media (max-width: 600px) {
     body { padding: 12px; }
     .day-label { width: 60px; min-width: 60px; padding: 8px; }
@@ -228,72 +66,15 @@
     .legend { font-size: 0.7em; gap: 10px; }
     header h1 { font-size: 1.3em; }
   }
-
-  .day-row.past {
-    opacity: 1;
-  }
-  
-  .day-group-past {
-    margin-bottom: 6px;
-  }
-  
-  .dual-timeline {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .timeline-layer {
-    display: flex;
-    position: relative;
-    min-height: 20px;
-    height: 20px;
-  }
-  
-  .timeline-plan {
-    opacity: 1;
-  }
-  
-  .row-label-tag {
-    position: absolute;
-    left: 4px;
-    top: 2px;
-    font-size: 0.55em;
-    font-weight: 600;
-    color: #8a7a60;
-    z-index: 5;
-    letter-spacing: 0.05em;
-  }
-  
-  .past-section summary::-webkit-details-marker { display: none; }
-  .past-section[open] summary .arrow { transform: rotate(90deg); }
-  
-  .status-banner {
-    text-align: center;
-    padding: 14px 20px;
-    border-radius: 8px;
-    margin-bottom: 24px;
-    font-size: 0.9em;
-    font-weight: 400;
-  }
-  .status-banner.available { background: #e8f5e8; color: #3a7a3a; border: 1px solid #c0e0c0; }
-  .status-banner.busy-work { background: #e0f2f5; color: #2a7a8a; border: 1px solid #b0d8e0; }
-  .status-banner.busy-design { background: #fdf0e0; color: #b07030; border: 1px solid #e8d0b0; }
-  .status-banner.sleeping { background: #edebe8; color: #999; border: 1px solid #ddd; }
-  .status-banner.waking { background: #f5f0e0; color: #8a7a50; border: 1px solid #e0d8c0; }
 </style>
 </head>
 <body>
-
 <div class="container">
   <header>
     <h1>📆 Calendario CaSa</h1>
-    <p id="subtitle">Febrero 2026</p>
+    <p id="subtitle"></p>
   </header>
-
   <div id="status-banner" class="status-banner available"></div>
-
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#3a8a9a"></div>Trabajo (no disponible)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#6ab06a"></div>Comida / descanso</div>
@@ -302,573 +83,202 @@
     <div class="legend-item"><div class="legend-dot" style="background:#9a6ab8"></div>Recreativo</div>
     <div class="legend-item"><div class="legend-dot" style="background:#5a8abf"></div>Personal</div>
   </div>
-
   <div class="hour-markers" id="hour-markers"></div>
   <div id="calendar"></div>
 </div>
-
 <script>
-const DAYS_DATA = [
-  // [date, dow, wake_h, wake_m, isWeekend]
-  [12, 'JUE', 9, 13, false],
-  [13, 'VIE', 8, 42, false],
-  [14, 'SÁB', 7, 54, true],
-  [15, 'DOM', 7, 59, true],
-  [16, 'LUN', 9, 2, false],
-  [17, 'MAR', 7, 28, false],
-  [18, 'MIÉ', 8, 20, false],
-  [19, 'JUE', 7, 51, false],
-  [20, 'VIE', 7, 32, false],
-  [21, 'SÁB', 6, 46, true],
-  [22, 'DOM', 7, 38, true],
-  [23, 'LUN', 8, 30, false], // override in getBlocks
-  [24, 'MAR', 6, 56, false],
-  [25, 'MIÉ', 10, 26, false],
-  [26, 'JUE', 7, 47, false],
-  [27, 'VIE', 8, 18, false],
-  [28, 'SÁB', 6, 34, true],
-];
+const DOW_NAMES = ['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'];
+const MONTH_NAMES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const RANGE_START = 5*60+30, RANGE_END = 23*60, RANGE_TOTAL = RANGE_END - RANGE_START;
 
-// Display range: 5:30 to 23:00 (17.5 hours)
-const RANGE_START = 5 * 60 + 30; // 5:30
-const RANGE_END = 23 * 60;  // 23:00
-const RANGE_TOTAL = RANGE_END - RANGE_START;
+function m(h,i){return h*60+i}
+function fmt(h,i){return String(h).padStart(2,'0')+':'+String(i||0).padStart(2,'0')}
+function fmtM(n){return fmt(Math.floor(n/60),n%60)}
+function B(s,e,c,l,t){return{start:s,end:e,cls:'b-'+c,label:l||'',time:!!t}}
 
-function minsToday(h, m) { return h * 60 + m; }
+// ============================================================
+// ALL DAY DATA — keyed by YYYY-MM-DD
+// ============================================================
+const DAYS = {
+  '2026-02-12': { wake:m(9,13), plan:(function(){var w=m(9,13),g=w+90,we=g+360,be=we+120,w2=be+360; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,we,'work','Trabajo',1),B(we,be,'break','Comida / familia',1),B(be,Math.min(w2,RANGE_END),'work','Trabajo',1)]})(), actual:null },
+  '2026-02-13': { wake:m(8,42), plan:(function(){var w=m(8,42),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,m(12,30),'work','Trabajo',1),B(m(12,30),m(14,30),'design','Diseño 🏠',1),B(m(14,30),m(16,0),'family','Familia',1),B(m(16,0),m(19,0),'work','Trabajo',1),B(m(19,0),m(22,0),'rec','Recreativo',1)]})(), actual:null },
+  '2026-02-14': { wake:m(7,54), plan:(function(){var w=m(7,54),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,m(13,0),'design','Diseño 🏠',1),B(m(13,0),m(15,0),'family','Familia',1),B(m(15,0),m(17,0),'design','Diseño 🏠',1),B(m(17,0),m(22,0),'rec','Recreativo',1)]})(), actual:null },
+  '2026-02-15': { wake:m(7,59), plan:[B(RANGE_START,m(7,59),'sleep','💤'),B(m(7,59),m(7,59)+90,'grog','Despertar'),B(m(10,0),m(11,30),'family','Familia',1),B(m(11,30),m(12,30),'design','Diseño',1),B(m(12,30),m(18,0),'family','Comida / familia',1),B(m(18,15),m(23,0),'design','Diseño 🏠',1)], actual:null },
+  '2026-02-16': { wake:m(9,2), plan:[B(RANGE_START,m(9,2),'sleep','💤'),B(m(9,2),m(9,2)+90,'grog','Despertar'),B(m(10,32),m(14,0),'work','Trabajo',1),B(m(14,0),m(17,30),'family','Comida / familia',1),B(m(17,30),m(18,30),'personal','Personal',1),B(m(18,30),RANGE_END,'design','Diseño 🏠',1)], actual:[B(RANGE_START,m(9,2),'sleep','💤'),B(m(9,2),m(9,2)+90,'grog','Despertar'),B(m(10,32),m(14,0),'work','Trabajo',1),B(m(14,0),m(17,30),'family','Comida / familia',1),B(m(17,30),m(18,30),'personal','Personal',1),B(m(18,30),m(21,30),'family','Familia',1),B(m(21,30),m(22,30),'work','Trabajo',1)] },
+  '2026-02-17': { wake:m(7,28), plan:(function(){var w=m(7,28),g=w+90,we=g+360,be=we+120,de=be+360; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,we,'work','Trabajo',1),B(we,be,'break','Comida / familia',1),B(be,Math.min(de,RANGE_END),'design','Diseño 🏠',1)]})(), actual:[B(RANGE_START,m(7,28),'sleep','💤'),B(m(7,28),m(14,0),'family','Familia',1),B(m(14,0),m(15,30),'design','Diseño 🏠',1),B(m(15,30),m(17,30),'break','Comida',1),B(m(17,30),RANGE_END,'work','Trabajo',1)] },
+  '2026-02-18': { wake:m(8,20), plan:[B(RANGE_START,m(8,20),'sleep','💤'),B(m(8,20),m(11,0),'grog','Despertar'),B(m(11,0),m(14,30),'work','Trabajo',1),B(m(14,30),m(15,30),'break','Comida',1),B(m(15,30),m(16,45),'work','Trabajo',1),B(m(16,45),m(17,45),'family','Familia',1),B(m(17,45),m(19,0),'work','Trabajo',1),B(m(19,0),m(21,53),'design','Diseño 🏠',1)], actual:[B(RANGE_START,m(8,20),'sleep','💤'),B(m(8,20),m(11,0),'grog','Despertar'),B(m(11,0),m(14,30),'work','Trabajo',1),B(m(14,30),m(15,30),'break','Comida',1),B(m(15,30),m(16,45),'work','Trabajo',1),B(m(16,45),m(17,45),'family','Familia',1),B(m(17,45),RANGE_END,'work','Trabajo',1)] },
+  '2026-02-19': { wake:m(7,51), plan:[B(RANGE_START,m(7,51),'sleep','💤'),B(m(7,51),m(9,21),'grog','Despertar'),B(m(9,21),m(15,21),'work','Trabajo',1),B(m(15,21),m(17,21),'break','Comida / familia',1),B(m(17,21),RANGE_END,'design','Diseño 🏠',1)], actual:[B(RANGE_START,m(7,51),'sleep','💤'),B(m(7,51),m(9,21),'grog','Despertar'),B(m(9,21),m(12,21),'work','Trabajo',1),B(m(12,21),m(15,21),'family','Familia',1),B(m(15,21),m(16,21),'break','Comida',1),B(m(16,21),m(17,21),'design','Diseño',1),B(m(17,21),m(22,0),'work','Trabajo',1)] },
+  '2026-02-20': { wake:m(7,32), plan:[B(RANGE_START,m(7,32),'sleep','💤'),B(m(7,32),m(10,0),'grog','Despertar'),B(m(10,0),m(16,0),'work','Trabajo',1),B(m(16,0),m(17,30),'break','Comida',1),B(m(17,30),RANGE_END,'work','Trabajo',1)], actual:[B(RANGE_START,m(7,32),'sleep','💤'),B(m(7,32),m(10,0),'grog','Despertar'),B(m(10,0),m(17,0),'work','Trabajo',1),B(m(17,0),m(17,30),'break','Comida',1),B(m(17,30),m(18,30),'work','Trabajo',1),B(m(18,30),m(22,0),'rec','Recreativo',1),B(m(22,0),RANGE_END,'family','Familia',1)] },
+  '2026-02-21': { wake:m(6,46), plan:(function(){var w=m(6,46),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,g+120,'work','Trabajo'),B(g+120,g+360,'family','Familia'),B(g+360,g+480,'break','Comida'),B(g+480,g+720,'design','Diseño 🏠'),B(g+720,RANGE_END,'rec','Recreativo')]})(), actual:[B(RANGE_START,m(9,26),'sleep','💤'),B(m(9,26),m(11,0),'grog','Despertar'),B(m(11,0),m(12,0),'family','Familia',1),B(m(12,0),m(14,0),'work','Trabajo',1),B(m(14,0),m(16,0),'break','Comida',1),B(m(16,0),m(22,0),'work','Trabajo',1)] },
+  '2026-02-22': { wake:m(7,38), plan:[B(RANGE_START,m(7,38),'sleep','💤'),B(m(7,38),m(8,0),'family',''),B(m(8,0),m(11,0),'work','Trabajo',1),B(m(11,0),m(15,0),'family','Familia',1),B(m(15,0),m(17,0),'break','Comida',1),B(m(17,0),m(19,0),'family','Familia',1),B(m(19,0),RANGE_END,'work','Trabajo',1)], actual:[B(RANGE_START,m(7,38),'sleep','💤'),B(m(7,38),m(8,0),'family',''),B(m(8,0),m(11,0),'work','Trabajo',1),B(m(11,0),m(15,0),'family','Familia',1),B(m(15,0),m(18,0),'break','Comida',1),B(m(18,0),RANGE_END,'family','Familia',1)] },
+  '2026-02-23': { wake:m(8,30), plan:[B(RANGE_START,m(8,30),'sleep','💤'),B(m(8,30),m(12,30),'grog',''),B(m(12,30),m(14,30),'break','Descanso',1),B(m(14,30),m(16,30),'work','Trabajo',1),B(m(16,30),m(17,0),'break','Descanso',1),B(m(17,0),m(19,0),'work','Trabajo',1),B(m(19,0),RANGE_END,'work','Trabajo',1)], actual:null },
+  '2026-02-24': { wake:m(6,56), plan:(function(){var w=m(6,56); return [B(RANGE_START,w,'sleep','💤'),B(w,w+120,'grog','Despertar'),B(w+120,m(14,0),'work','Trabajo',1),B(m(14,0),m(16,0),'break','Comida',1),B(m(16,0),RANGE_END,'work','Trabajo',1)]})(), actual:null },
+  '2026-02-25': { wake:m(10,26), plan:(function(){var w=m(10,26),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,m(14,0),'work','Trabajo',1),B(m(14,0),m(17,0),'break','Comida',1),B(m(17,0),m(20,56),'work','Trabajo',1),B(m(20,56),m(21,26),'break','Descanso',1),B(m(21,26),m(22,46),'work','Trabajo',1)]})(), actual:(function(){var w=m(10,26),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,m(16,0),'work','Trabajo',1),B(m(16,0),m(18,0),'break','Comida',1),B(m(18,0),RANGE_END,'work','Trabajo',1)]})() },
+  '2026-02-26': { wake:m(7,47), plan:(function(){var w=m(7,47),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,m(13,30),'work','Trabajo',1),B(m(13,30),m(15,30),'break','Comida',1),B(m(15,30),m(19,30),'work','Trabajo',1),B(m(19,30),m(20,0),'break','',0),B(m(20,0),RANGE_END,'design','Diseño 🏠',1)]})(), actual:(function(){var w=m(7,47),g=w+90; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,m(15,30),'work','Trabajo',1),B(m(15,30),m(17,30),'break','Comida',1),B(m(17,30),m(22,15),'work','Trabajo',1),B(m(22,15),m(22,30),'break','',0),B(m(22,30),RANGE_END,'work','Trabajo',1)]})() },
+  '2026-02-27': { wake:m(8,18), plan:(function(){var w=m(8,18),g=w+120,fe=g+30,we=fe+360,be=we+120; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,fe,'family','Familia',0),B(fe,we,'work','Trabajo',1),B(we,be,'break','Comida / familia',1),B(be,RANGE_END,'design','Diseño 🏠',1)]})(), actual:null },
+  '2026-02-28': { wake:m(6,34), plan:(function(){var w=m(6,34),g=w+90,we1=g+240,fe=we1+240,de=fe+240,re=de+240; return [B(RANGE_START,w,'sleep','💤'),B(w,g,'grog','Despertar'),B(g,we1,'work','Trabajo',1),B(we1,fe,'family','Familia',1),B(fe,de,'design','Diseño 🏠',1),B(de,Math.min(re,RANGE_END),'rec','Recreativo',1)]})(), actual:null },
+};
 
-function fmt(h, m) {
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-}
+// ============================================================
+// DATE UTILITIES
+// ============================================================
+function parseDate(s){var p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2])}
+function dateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
+// Week start = Sunday
+function weekStart(d){var r=new Date(d);r.setDate(r.getDate()-r.getDay());return r}
 
-function getBlocks(day) {
-  const [date, dow, wh, wm, isWE] = day;
-  const wake = minsToday(wh, wm);
-  const grogEnd = wake + 90;
-  
-  // Day-specific overrides
-  if (date === 12) {
-    // Jueves 12 feb — trabajo mañana y tarde
-    const workEnd = grogEnd + 360;
-    const breakEnd = workEnd + 120;
-    const work2End = breakEnd + 360;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: breakEnd, end: Math.min(work2End, RANGE_END), cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  } else if (date === 13) {
-    // Viernes 13 feb — custom
-    const workEnd = 12 * 60 + 30; // 12:30
-    const designEnd = 14 * 60 + 30; // 14:30
-    const famEnd = 16 * 60; // 16:00
-    const work2End = 19 * 60; // 19:00
-    const recEnd = 22 * 60; // 22:00
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: workEnd, end: designEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: designEnd, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
-      { start: famEnd, end: work2End, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: work2End, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
-    ];
-  } else if (date === 14) {
-    // Sábado 14 feb — custom
-    const designEnd1 = 13 * 60; // 13:00
-    const famEnd = 15 * 60; // 15:00
-    const designEnd2 = 17 * 60; // 17:00
-    const recEnd = 22 * 60; // 22:00
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: designEnd1, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: designEnd1, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
-      { start: famEnd, end: designEnd2, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: designEnd2, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
-    ];
-  } else if (date === 15) {
-    // Domingo 15 feb — familia + diseño corto + comida familia + diseño noche
-    const famStart = 10 * 60;         // 10:00
-    const famEnd = 11 * 60 + 30;      // 11:30
-    const des1Start = 11 * 60 + 30;   // 11:30
-    const des1End = 12 * 60 + 30;     // 12:30
-    const comidaStart = 12 * 60 + 30; // 12:30
-    const comidaEnd = 18 * 60;        // 18:00
-    const des2Start = 18 * 60 + 15;   // 18:15
-    const des2End = 23 * 60 + 15;     // 23:15
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: famStart, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
-      { start: des1Start, end: des1End, cls: 'b-design', label: 'Diseño', time: true },
-      { start: comidaStart, end: comidaEnd, cls: 'b-family', label: 'Comida / familia', time: true },
-      { start: des2Start, end: des2End, cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  } else if (date === 16) {
-    // Lunes 16 feb — despertar tardío 09:02
-    const work1Start = 10 * 60 + 32;  // 10:32
-    const work1End = 14 * 60;         // 14:00
-    const famEnd = 17 * 60 + 30;      // 17:30
-    const persEnd = 18 * 60 + 30;     // 18:30
-    const designEnd = 23 * 60;        // 23:00 (continúa hasta 00:32 del 17)
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: work1Start, end: work1End, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: work1End, end: famEnd, cls: 'b-family', label: 'Comida / familia', time: true },
-      { start: famEnd, end: persEnd, cls: 'b-personal', label: 'Personal', time: true },
-      { start: persEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  } else if (date === 18) {
-    // Miércoles 18 feb — trabajo fragmentado, comida 14:30-15:30, familia 16:45-17:45
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 11 * 60, cls: 'b-grog', label: 'Despertar' },
-      { start: 11 * 60, end: 14 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60 + 30, end: 15 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 15 * 60 + 30, end: 16 * 60 + 45, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 16 * 60 + 45, end: 17 * 60 + 45, cls: 'b-family', label: 'Familia', time: true },
-      { start: 17 * 60 + 45, end: 19 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 19 * 60, end: 21 * 60 + 53, cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  } else if (date === 20) {
-    // Viernes 20 feb — trabajo 10-16, comida 16-17:30, trabajo 17:30-23
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 10 * 60, cls: 'b-grog', label: 'Despertar' },
-      { start: 10 * 60, end: 16 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 16 * 60, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 17 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  } else if (date === 22) {
-    // Domingo 22 feb — familia, trabajo, familia, comida, familia, trabajo
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 8 * 60, cls: 'b-family', label: '' },
-      { start: 8 * 60, end: 11 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 11 * 60, end: 15 * 60, cls: 'b-family', label: 'Familia', time: true },
-      { start: 15 * 60, end: 17 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 17 * 60, end: 19 * 60, cls: 'b-family', label: 'Familia', time: true },
-      { start: 19 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  } else if (date === 21) {
-    // Sábado 21 feb — plan: trabajo 2h, familia 4h, comida 2h, diseño 4h, recreativo
-    const grogEnd = wake + 90; // 0816
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: grogEnd + 120, cls: 'b-work', label: 'Trabajo' },
-      { start: grogEnd + 120, end: grogEnd + 360, cls: 'b-family', label: 'Familia' },
-      { start: grogEnd + 360, end: grogEnd + 480, cls: 'b-break', label: 'Comida' },
-      { start: grogEnd + 480, end: grogEnd + 720, cls: 'b-design', label: 'Diseño 🏠' },
-      { start: grogEnd + 720, end: RANGE_END, cls: 'b-rec', label: 'Recreativo' },
-    ];
-  } else if (date === 19) {
-    // Jueves 19 feb — plan original
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 9 * 60 + 21, cls: 'b-grog', label: 'Despertar' },
-      { start: 9 * 60 + 21, end: 15 * 60 + 21, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 15 * 60 + 21, end: 17 * 60 + 21, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: 17 * 60 + 21, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  } else if (isWE) {
-    // Fin de semana default
-    const workEnd = grogEnd + 240;
-    const famEnd = workEnd + 240;
-    const desEnd = famEnd + 240;
-    const recEnd = desEnd + 240;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: workEnd, end: famEnd, cls: 'b-family', label: 'Familia', time: true },
-      { start: famEnd, end: desEnd, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: desEnd, end: Math.min(recEnd, RANGE_END), cls: 'b-rec', label: 'Recreativo', time: true },
-    ];
-  } else if (date === 26) {
-    // Jueves 26 feb — trabajo desde 11:30, 6h total, comida 13:30-15:30, diseño al final
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 11 * 60 + 30, cls: 'b-grog', label: 'Despertar' },
-      { start: 11 * 60 + 30, end: 13 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 13 * 60 + 30, end: 15 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 15 * 60 + 30, end: 19 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 19 * 60 + 30, end: 20 * 60, cls: 'b-break', label: '', time: false },
-      { start: 20 * 60, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  } else if (date === 27) {
-    // Viernes 27 feb — 2h despertar, 30min familia, 6h trabajo, 2h comida, diseño
-    const grogEnd2 = wake + 120; // 10:18
-    const famEnd = grogEnd2 + 30; // 10:48
-    const workEnd = famEnd + 360; // 16:48
-    const breakEnd = workEnd + 120; // 18:48
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd2, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd2, end: famEnd, cls: 'b-family', label: 'Familia', time: false },
-      { start: famEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: breakEnd, end: RANGE_END, cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
-  } else if (date === 25) {
-    // Miércoles 25 feb — trabajo cortado por comida 14-16, reanuda, break 30min, diseño hasta 22:46
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60, end: 17 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 17 * 60, end: 20 * 60 + 56, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 20 * 60 + 56, end: 21 * 60 + 26, cls: 'b-break', label: 'Descanso', time: true },
-      { start: 21 * 60 + 26, end: 22 * 60 + 46, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  } else if (date === 24) {
-    // Martes 24 feb — despertar 2h, trabajo, comida 14-16, trabajo 16-23
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: wake + 120, cls: 'b-grog', label: 'Despertar' },
-      { start: wake + 120, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60, end: 16 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 16 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  } else if (date === 23) {
-    // Lunes 23 feb — ajuste real: trabajo fragmentado desde 12:30
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 12 * 60 + 30, cls: 'b-grog', label: '' },
-      { start: 12 * 60 + 30, end: 14 * 60 + 30, cls: 'b-break', label: 'Descanso', time: true },
-      { start: 14 * 60 + 30, end: 16 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 16 * 60 + 30, end: 17 * 60, cls: 'b-break', label: 'Descanso', time: true },
-      { start: 17 * 60, end: 19 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 19 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
+function categorize(dateObj, today, isFuture) {
+  var todayWS = weekStart(today), dateWS = weekStart(dateObj);
+  if (sameDay(dateObj, today)) return 'hoy';
+  if (isFuture) {
+    if (sameDay(dateWS, todayWS)) return 'esta semana';
+    var nws = new Date(todayWS); nws.setDate(nws.getDate()+7);
+    if (sameDay(dateWS, nws)) return 'próxima semana';
+    if (dateObj.getMonth()===today.getMonth()&&dateObj.getFullYear()===today.getFullYear()) return 'este mes';
+    var nm=today.getMonth()+1, ny=nm>11?today.getFullYear()+1:today.getFullYear();
+    if (dateObj.getMonth()===(nm%12)&&dateObj.getFullYear()===ny) return 'próximo mes';
+    if (dateObj.getFullYear()===today.getFullYear()) return 'este año';
+    return 'próximo año';
   } else {
-    // Entre semana default
-    const workEnd = grogEnd + 360;
-    const breakEnd = workEnd + 120;
-    const designEnd = breakEnd + 360;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: workEnd, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: workEnd, end: breakEnd, cls: 'b-break', label: 'Comida / familia', time: true },
-      { start: breakEnd, end: Math.min(designEnd, RANGE_END), cls: 'b-design', label: 'Diseño 🏠', time: true },
-    ];
+    if (sameDay(dateWS, todayWS)) return 'esta semana';
+    var pws = new Date(todayWS); pws.setDate(pws.getDate()-7);
+    if (sameDay(dateWS, pws)) return 'semana pasada';
+    if (dateObj.getMonth()===today.getMonth()&&dateObj.getFullYear()===today.getFullYear()) return 'este mes';
+    var pm=today.getMonth()-1, py=pm<0?today.getFullYear()-1:today.getFullYear();
+    if (dateObj.getMonth()===((pm+12)%12)&&dateObj.getFullYear()===py) return 'mes pasado';
+    if (dateObj.getFullYear()===today.getFullYear()) return 'este año';
+    return 'año pasado';
   }
 }
 
-// What actually happened (null = assume plan was followed)
-function getActualBlocks(day) {
-  const [date, dow, wh, wm, isWE] = day;
-  const wake = minsToday(wh, wm);
-  
-  if (date === 16) {
-    // Lunes 16 feb — igual al plan excepto: familia 18:30-21:30, trabajo 21:30-22:30
-    const wake = minsToday(wh, wm);
-    const grogEnd = wake + 90;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: 10 * 60 + 32, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60, end: 17 * 60 + 30, cls: 'b-family', label: 'Comida / familia', time: true },
-      { start: 17 * 60 + 30, end: 18 * 60 + 30, cls: 'b-personal', label: 'Personal', time: true },
-      { start: 18 * 60 + 30, end: 21 * 60 + 30, cls: 'b-family', label: 'Familia', time: true },
-      { start: 21 * 60 + 30, end: 22 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
-  
-  if (date === 17) {
-    // Martes 17 feb — familia toda la mañana, diseño corto, comida, trabajo nocturno
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 14 * 60, cls: 'b-family', label: 'Familia', time: true },
-      { start: 14 * 60, end: 15 * 60 + 30, cls: 'b-design', label: 'Diseño 🏠', time: true },
-      { start: 15 * 60 + 30, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 17 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
+var FUTURE_ORDER = ['hoy','esta semana','próxima semana','este mes','próximo mes','este año','próximo año'];
+var PAST_ORDER = ['esta semana','semana pasada','este mes','mes pasado','este año','año pasado'];
 
-  if (date === 18) {
-    // Miércoles 18 feb (real) — la sesión de trabajo de la tarde se extendió hasta 23:30; sin diseño
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 11 * 60, cls: 'b-grog', label: 'Despertar' },
-      { start: 11 * 60, end: 14 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60 + 30, end: 15 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 15 * 60 + 30, end: 16 * 60 + 45, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 16 * 60 + 45, end: 17 * 60 + 45, cls: 'b-family', label: 'Familia', time: true },
-      { start: 17 * 60 + 45, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
-
-  if (date === 19) {
-    // Jueves 19 feb (real) — trabajo cortado a 12:21, familia 3h, comida 1h, diseño 1h, trabajo hasta 22:00
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 9 * 60 + 21, cls: 'b-grog', label: 'Despertar' },
-      { start: 9 * 60 + 21, end: 12 * 60 + 21, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 12 * 60 + 21, end: 15 * 60 + 21, cls: 'b-family', label: 'Familia', time: true },
-      { start: 15 * 60 + 21, end: 16 * 60 + 21, cls: 'b-break', label: 'Comida', time: true },
-      { start: 16 * 60 + 21, end: 17 * 60 + 21, cls: 'b-design', label: 'Diseño', time: true },
-      { start: 17 * 60 + 21, end: 22 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
-  
-  if (date === 20) {
-    // Viernes 20 feb (real) — trabajo hasta 17, comida 17-17:30, trabajo 17:30-18:30, recreativo, familia
-    return [
-      { start: RANGE_START, end: 7 * 60 + 32, cls: 'b-sleep', label: '💤' },
-      { start: 7 * 60 + 32, end: 10 * 60, cls: 'b-grog', label: 'Despertar' },
-      { start: 10 * 60, end: 17 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 17 * 60, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 17 * 60 + 30, end: 18 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 18 * 60 + 30, end: 22 * 60, cls: 'b-rec', label: 'Recreativo', time: true },
-      { start: 22 * 60, end: RANGE_END, cls: 'b-family', label: 'Familia', time: true },
-    ];
-  } else if (date === 22) {
-    // Domingo 22 feb (real) — trabajo mañana, familia, comida larga, familia noche (sin trabajo tarde)
-    const wake = minsToday(7, 38);
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: 8 * 60, cls: 'b-family', label: '' },
-      { start: 8 * 60, end: 11 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 11 * 60, end: 15 * 60, cls: 'b-family', label: 'Familia', time: true },
-      { start: 15 * 60, end: 18 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 18 * 60, end: RANGE_END, cls: 'b-family', label: 'Familia', time: true },
-    ];
-  } else if (date === 21) {
-    // Sábado 21 feb (real) — despertó 9:26, familia 1h, trabajo 2h, comida 2h, trabajo 6h
-    return [
-      { start: RANGE_START, end: 9 * 60 + 26, cls: 'b-sleep', label: '💤' },
-      { start: 9 * 60 + 26, end: 11 * 60, cls: 'b-grog', label: 'Despertar' },
-      { start: 11 * 60, end: 12 * 60, cls: 'b-family', label: 'Familia', time: true },
-      { start: 12 * 60, end: 14 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 14 * 60, end: 16 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 16 * 60, end: 22 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
-
-  if (date === 25) {
-    // Miércoles 25 feb (real) — trabajo hasta 16, comida 16-18, trabajo 18-23
-    const wake = minsToday(10, 26);
-    const grogEnd = wake + 90;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: 16 * 60, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 16 * 60, end: 18 * 60, cls: 'b-break', label: 'Comida', time: true },
-      { start: 18 * 60, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
-
-  if (date === 26) {
-    // Jueves 26 feb (real) — trabajo corrido hasta 15:30, comida, trabajo, micro-break, trabajo
-    const wake = minsToday(7, 47);
-    const grogEnd = wake + 90;
-    return [
-      { start: RANGE_START, end: wake, cls: 'b-sleep', label: '💤' },
-      { start: wake, end: grogEnd, cls: 'b-grog', label: 'Despertar' },
-      { start: grogEnd, end: 15 * 60 + 30, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 15 * 60 + 30, end: 17 * 60 + 30, cls: 'b-break', label: 'Comida', time: true },
-      { start: 17 * 60 + 30, end: 22 * 60 + 15, cls: 'b-work', label: 'Trabajo', time: true },
-      { start: 22 * 60 + 15, end: 22 * 60 + 30, cls: 'b-break', label: '', time: false },
-      { start: 22 * 60 + 30, end: RANGE_END, cls: 'b-work', label: 'Trabajo', time: true },
-    ];
-  }
-
-  return null; // no actual data = assume plan was followed
-}
-
-function getCurrentStatus() {
-  const now = new Date();
-  const today = now.getDate();
-  const month = now.getMonth() + 1;
-  if (month !== 2) return null;
-  
-  const dayData = DAYS_DATA.find(d => d[0] === today);
-  if (!dayData) return null;
-  
-  const nowMins = now.getHours() * 60 + now.getMinutes();
-  const actualBlocks = getActualBlocks(dayData);
-  const blocks = actualBlocks || getBlocks(dayData);
-  
-  for (const b of blocks) {
-    if (nowMins >= b.start && nowMins < b.end) {
-      return b;
-    }
-  }
-  return null;
-}
-
+// ============================================================
+// RENDER
+// ============================================================
 function render() {
-  const cal = document.getElementById('calendar');
-  const now = new Date();
-  const todayDate = now.getDate();
-  const todayMonth = now.getMonth() + 1;
-  const nowMins = now.getHours() * 60 + now.getMinutes();
-  
-  // Hour markers
-  const hm = document.getElementById('hour-markers');
-  let hmHtml = '';
-  for (let h = 6; h <= 23; h++) {
-    hmHtml += `<span>${h}:00</span>`;
+  var cal = document.getElementById('calendar');
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var todayS = dateStr(today);
+  var nowMins = now.getHours()*60+now.getMinutes();
+
+  document.getElementById('subtitle').textContent =
+    MONTH_NAMES[today.getMonth()].charAt(0).toUpperCase()+MONTH_NAMES[today.getMonth()].slice(1)+' '+today.getFullYear();
+
+  var hm = document.getElementById('hour-markers'), hmH='';
+  for(var h=6;h<=23;h++) hmH+='<span>'+h+':00</span>';
+  hm.innerHTML=hmH;
+
+  var allDates = Object.keys(DAYS).sort();
+  var todayDays=[], futureDays=[], pastDays=[];
+  for(var i=0;i<allDates.length;i++){
+    var ds=allDates[i], d=parseDate(ds);
+    if(sameDay(d,today)) todayDays.push(ds);
+    else if(d>today) futureDays.push(ds);
+    else pastDays.push(ds);
   }
-  hm.innerHTML = hmHtml;
-  
-  // Split days: today, future, past
-  const todayData = DAYS_DATA.filter(d => todayMonth === 2 && d[0] === todayDate);
-  const futureDays = DAYS_DATA.filter(d => todayMonth !== 2 || d[0] > todayDate);
-  const pastDays = DAYS_DATA.filter(d => todayMonth === 2 && d[0] < todayDate).reverse(); // most recent first
-  
-  let html = '';
-  
-  function renderTimeline(blocks, wh, wm, isToday, showWake, showGrogClock) {
-    let out = '';
-    for (const b of blocks) {
-      const clampStart = Math.max(b.start, RANGE_START);
-      const clampEnd = Math.min(b.end, RANGE_END);
-      if (clampEnd <= clampStart) continue;
-      
-      const left = ((clampStart - RANGE_START) / RANGE_TOTAL) * 100;
-      const width = ((clampEnd - clampStart) / RANGE_TOTAL) * 100;
-      
-      const startH = Math.floor(clampStart / 60);
-      const startM = clampStart % 60;
-      const endH = Math.floor(clampEnd / 60);
-      const endM = clampEnd % 60;
-      
-      const timeStr = b.time ? `<span class="time-label">${fmt(startH,startM)}</span><span class="time-label-end">${fmt(endH,endM)}</span>` : '';
-      
-      const minW = b.cls === 'b-sleep' ? Math.max(width, 7) : Math.max(width, 5);
-      let displayLabel = b.label;
-      if (b.cls === 'b-grog' && showGrogClock !== false) { const gH = Math.floor(b.start / 60); const gM = b.start % 60; displayLabel = `⏰ ${fmt(gH,gM)}`; }
-      out += `<div class="block ${b.cls}" style="position:absolute;left:${left}%;width:${minW}%;height:100%" title="${b.label}: ${fmt(startH,startM)} - ${fmt(endH,endM)}">${minW > 5 ? displayLabel : ''}${minW > 12 ? timeStr : ''}</div>`;
+  pastDays.reverse();
+
+  function renderTimeline(blocks, isToday) {
+    var out='';
+    for(var i=0;i<blocks.length;i++){
+      var b=blocks[i];
+      var cs=Math.max(b.start,RANGE_START), ce=Math.min(b.end,RANGE_END);
+      if(ce<=cs) continue;
+      var left=((cs-RANGE_START)/RANGE_TOTAL)*100;
+      var width=((ce-cs)/RANGE_TOTAL)*100;
+      var minW=b.cls==='b-sleep'?Math.max(width,7):Math.max(width,5);
+      var displayLabel=b.label;
+      if(b.cls==='b-grog'&&b.start>0) displayLabel='⏰ '+fmtM(b.start);
+      var timeStr=b.time?'<span class="time-label">'+fmtM(cs)+'</span><span class="time-label-end">'+fmtM(ce)+'</span>':'';
+      out+='<div class="block '+b.cls+'" style="position:absolute;left:'+left+'%;width:'+minW+'%;height:100%" title="'+b.label+': '+fmtM(cs)+' - '+fmtM(ce)+'">'+(minW>5?displayLabel:'')+(minW>12?timeStr:'')+'</div>';
     }
-    
-    /* wake marker removed — wake time shown in grog block label */
-    
-    if (isToday && nowMins >= RANGE_START && nowMins <= RANGE_END) {
-      const nowLeft = ((nowMins - RANGE_START) / RANGE_TOTAL) * 100;
-      out += `<div class="now-line" style="left:${nowLeft}%"><div class="now-dot"></div></div>`;
+    if(isToday&&nowMins>=RANGE_START&&nowMins<=RANGE_END){
+      var nl=((nowMins-RANGE_START)/RANGE_TOTAL)*100;
+      out+='<div class="now-line" style="left:'+nl+'%"><div class="now-dot"></div></div>';
     }
-    
     return out;
   }
-  
-  function renderDay(day, isPast) {
-    const [date, dow, wh, wm, isWE] = day;
-    const isToday = todayMonth === 2 && todayDate === date;
-    const plannedBlocks = getBlocks(day);
-    const actualBlocks = getActualBlocks(day);
-    
-    if (actualBlocks) {
-      // Single row, two stacked timelines inside
-      html += `<div class="day-row ${isToday ? 'today' : ''}">`;
-      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
-      html += `<div class="dual-timeline">`;
-      html += `<div class="timeline-layer timeline-real"><span class="row-label-tag">REAL</span>`;
-      html += renderTimeline(actualBlocks, wh, wm, isToday, true);
-      html += `</div>`;
-      html += `<div class="timeline-layer timeline-plan"><span class="row-label-tag">PLAN</span>`;
-      html += renderTimeline(plannedBlocks, wh, wm, false, true, false);
-      html += `</div>`;
-      html += `</div></div>`;
+
+  function renderDay(ds, isToday) {
+    var d=parseDate(ds), day=DAYS[ds];
+    var dow=DOW_NAMES[d.getDay()];
+    var dateLabel=d.getDate()+' '+MONTH_NAMES[d.getMonth()].slice(0,3);
+    var h='';
+    if(day.actual){
+      h+='<div class="day-row'+(isToday?' today':'')+'"><div class="day-label"><span class="dow">'+dow+'</span><span class="date">'+dateLabel+'</span></div><div class="dual-timeline"><div class="timeline-layer"><span class="row-label-tag">REAL</span>'+renderTimeline(day.actual,isToday)+'</div><div class="timeline-layer"><span class="row-label-tag">PLAN</span>'+renderTimeline(day.plan,false)+'</div></div></div>';
     } else {
-      html += `<div class="day-row ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}">`;
-      html += `<div class="day-label"><span class="dow">${dow}</span><span class="date">${date} feb</span></div>`;
-      html += `<div class="timeline">`;
-      html += renderTimeline(plannedBlocks, wh, wm, isToday, true);
-      html += `</div></div>`;
+      h+='<div class="day-row'+(isToday?' today':'')+'"><div class="day-label"><span class="dow">'+dow+'</span><span class="date">'+dateLabel+'</span></div><div class="timeline">'+renderTimeline(day.plan,isToday)+'</div></div>';
     }
+    return h;
   }
-  
-  // Helper: get week start (Sun-Sat weeks) for a feb 2026 date
-  function getWeekStart(date) {
-    const d = new Date(2026, 1, date); // Feb 2026
-    const dow = d.getDay(); // 0=Sun, 1=Mon, ... 6=Sat
-    return date - dow; // Sunday of that week
-  }
-  
-  function getWeekLabel(date) {
-    const todayWeekStart = getWeekStart(todayDate);
-    const dateWeekStart = getWeekStart(date);
-    const diff = dateWeekStart - todayWeekStart;
-    if (diff === 0) return 'Esta semana';
-    if (diff === 7) return 'Próxima semana';
-    if (diff === -7) return 'Semana pasada';
-    if (diff < -7) return 'Este mes';
-    return `En ${Math.round(diff / 7)} semanas`;
-  }
-  
-  function renderWithWeeks(days, isPast) {
-    let lastWeek = '';
-    for (const day of days) {
-      const wl = getWeekLabel(day[0]);
-      if (wl !== lastWeek) {
-        if (lastWeek) html += '<div style="height:8px"></div>';
-        html += `<div class="week-label">${wl}</div>`;
-        lastWeek = wl;
-      }
-      renderDay(day, isPast);
+
+  function renderGrouped(days, isFuture) {
+    var order=isFuture?FUTURE_ORDER:PAST_ORDER;
+    var groups={};
+    for(var i=0;i<days.length;i++){
+      var ds=days[i], cat=categorize(parseDate(ds),today,isFuture);
+      if(!groups[cat]) groups[cat]=[];
+      groups[cat].push(ds);
     }
+    var h='';
+    for(var j=0;j<order.length;j++){
+      var cat=order[j];
+      if(!groups[cat]||groups[cat].length===0) continue;
+      h+='<div class="week-label">'+cat.charAt(0).toUpperCase()+cat.slice(1)+'</div>';
+      for(var k=0;k<groups[cat].length;k++) h+=renderDay(groups[cat][k],false);
+    }
+    return h;
   }
-  
-  // Render: today first
-  for (const day of todayData) {
-    html += `<div class="week-label">Hoy</div>`;
-    renderDay(day, false);
+
+  var html='';
+
+  // TODAY
+  if(todayDays.length){
+    html+='<div class="week-label">Hoy</div>';
+    for(var i=0;i<todayDays.length;i++) html+=renderDay(todayDays[i],true);
   }
-  
-  // Future days with week labels
-  if (futureDays.length) {
-    html += '<div style="height:8px"></div>';
-    renderWithWeeks(futureDays, false);
+
+  // FUTURE
+  if(futureDays.length){
+    html+='<div style="height:8px"></div>';
+    html+=renderGrouped(futureDays,true);
   }
-  
-  // Past days, most recent first, collapsed, with week labels
-  if (pastDays.length) {
-    html += '<div style="height:16px"></div>';
-    html += '<details class="past-section"><summary class="week-label" style="cursor:pointer;user-select:none;">Días anteriores ▸</summary>';
-    html += '<div style="margin-top:8px">';
-    renderWithWeeks(pastDays, true);
-    html += '</div></details>';
+
+  // PAST (collapsible)
+  if(pastDays.length){
+    html+='<div style="height:16px"></div>';
+    html+='<details class="past-section"><summary class="week-label" style="cursor:pointer;user-select:none;">Días anteriores ▸</summary><div style="margin-top:8px">';
+    html+=renderGrouped(pastDays,false);
+    html+='</div></details>';
   }
-  
-  cal.innerHTML = html;
-  
+
+  cal.innerHTML=html;
+
   // Status banner
-  const banner = document.getElementById('status-banner');
-  const currentBlock = getCurrentStatus();
-  if (currentBlock) {
-    const endH = Math.floor(currentBlock.end / 60);
-    const endM = currentBlock.end % 60;
-    
-    const messages = {
-      'b-sleep': ['sleeping', '😴 Durmiendo — no molestar'],
-      'b-grog': ['waking', '☕ Despertando — disponible para cosas rápidas'],
-      'b-work': ['busy-work', `💼 Trabajando — no disponible hasta las ${fmt(endH,endM)}`],
-      'b-break': ['available', '🍽️ Comida y familia — disponible'],
-      'b-design': ['busy-design', `🏠 Diseño ME125 — trabajando juntos hasta las ${fmt(endH,endM)}`],
-      'b-family': ['available', '👨‍👩‍👧 Tiempo de familia — disponible'],
-      'b-rec': ['available', '🎮 Tiempo recreativo — disponible'],
-      'b-personal': ['available', '🧘 Tiempo personal'],
-    };
-    
-    const [cls, msg] = messages[currentBlock.cls] || ['available', 'Disponible'];
-    banner.className = `status-banner ${cls}`;
-    banner.innerHTML = msg;
-    banner.style.display = 'block';
+  var banner=document.getElementById('status-banner');
+  if(DAYS[todayS]){
+    var dayData=DAYS[todayS], blocks=dayData.actual||dayData.plan, current=null;
+    for(var i=0;i<blocks.length;i++){if(nowMins>=blocks[i].start&&nowMins<blocks[i].end){current=blocks[i];break;}}
+    if(current){
+      var endStr=fmtM(Math.min(current.end,RANGE_END));
+      var msgs={'b-sleep':['sleeping','😴 Durmiendo — no molestar'],'b-grog':['waking','☕ Despertando — disponible para cosas rápidas'],'b-work':['busy-work','💼 Trabajando — no disponible hasta las '+endStr],'b-break':['available','🍽️ Comida y familia — disponible'],'b-design':['busy-design','🏠 Diseño ME125 — trabajando juntos hasta las '+endStr],'b-family':['available','👨‍👩‍👧 Tiempo de familia — disponible'],'b-rec':['available','🎮 Tiempo recreativo — disponible'],'b-personal':['available','🧘 Tiempo personal']};
+      var info=msgs[current.cls]||['available','Disponible'];
+      banner.className='status-banner '+info[0];
+      banner.innerHTML=info[1];
+      banner.style.display='block';
+    } else { banner.style.display='none'; }
   } else {
-    banner.style.display = 'none';
+    banner.innerHTML='📋 No hay programación para hoy';
+    banner.className='status-banner available';
+    banner.style.display='block';
   }
 }
-
 render();
-// Update every minute
-setInterval(render, 60000);
+setInterval(render,60000);
 </script>
-
 </body>
 </html>
